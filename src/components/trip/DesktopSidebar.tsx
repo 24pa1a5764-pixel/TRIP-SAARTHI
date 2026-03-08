@@ -115,7 +115,7 @@ export default function DesktopSidebar({
           className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition`}
         >
           <Settings className="w-4 h-4 shrink-0" />
-          {!collapsed && <span className="text-[11px] font-medium">Settings</span>}
+          {!collapsed && <span className="text-[11px] font-medium">{t("settings")}</span>}
         </button>
         <button
           onClick={onSafetyClick}
