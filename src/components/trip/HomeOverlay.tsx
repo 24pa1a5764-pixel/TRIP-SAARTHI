@@ -81,6 +81,7 @@ export default function HomeOverlay({
     onBadgesClick, onTransportClick, onFestivalsClick, onLanguageClick,
     onPhotoSpotsClick, onCommunityClick, onCarbonClick,
   };
+  const { t } = useTranslation();
 
   return (
     <div className="h-full overflow-y-auto ts-scrollbar-hide">
