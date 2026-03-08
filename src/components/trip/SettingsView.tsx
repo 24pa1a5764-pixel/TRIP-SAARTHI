@@ -97,7 +97,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
 
         {/* Language */}
         <section>
-          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Language</h3>
+          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">{t("language")}</h3>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
