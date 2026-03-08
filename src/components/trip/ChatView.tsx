@@ -54,7 +54,7 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
           <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-ts-green rounded-full border-2 border-card" />
         </div>
         <div className="flex-1">
-          <h2 className="text-sm font-display font-bold text-foreground">Saarthi AI</h2>
+          <h2 className="text-sm font-display font-bold text-foreground">{t("nav_chat")}</h2>
           <p className="text-[10px] text-ts-green font-bold">Online • Your travel expert</p>
         </div>
         <div className="bg-primary/10 px-2.5 py-1 rounded-lg flex items-center gap-1">
