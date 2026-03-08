@@ -1,22 +1,30 @@
 import { motion } from "framer-motion";
-import { Compass } from "lucide-react";
+import { Compass, MapPin, Wand2, Shield } from "lucide-react";
 
 interface AuthScreenProps {
   onLogin: (type: string) => void;
 }
 
 export default function AuthScreen({ onLogin }: AuthScreenProps) {
+  const features = [
+    { icon: MapPin, text: "Discover 1000+ destinations" },
+    { icon: Wand2, text: "AI-powered trip planning" },
+    { icon: Shield, text: "Real-time safety alerts" },
+  ];
+
   return (
     <div className="fixed inset-0 ts-gradient-hero flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center px-8 pb-8">
+      {/* Top Section */}
+      <div className="flex-1 flex flex-col items-center justify-center px-8 pb-4">
         <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
+          initial={{ scale: 0, rotate: -90 }}
+          animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="w-20 h-20 rounded-3xl ts-glass flex items-center justify-center mb-6"
+          className="w-20 h-20 rounded-3xl bg-primary-foreground/10 backdrop-blur-xl border border-primary-foreground/20 flex items-center justify-center mb-8"
         >
           <Compass className="w-10 h-10 text-primary-foreground" />
         </motion.div>
+
         <motion.h1
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -29,16 +37,41 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-primary-foreground/60 text-center text-sm max-w-[280px]"
+          className="text-primary-foreground/50 text-center text-sm max-w-[280px] mb-8"
         >
           Plan trips, discover hidden gems, and travel safely with AI.
         </motion.p>
+
+        {/* Feature Pills */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="flex flex-col gap-2"
+        >
+          {features.map((f, i) => {
+            const Icon = f.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="flex items-center gap-3 bg-primary-foreground/5 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-primary-foreground/10"
+              >
+                <Icon className="w-4 h-4 text-primary-foreground/70" />
+                <span className="text-xs text-primary-foreground/70 font-medium">{f.text}</span>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
 
+      {/* Bottom Auth Buttons */}
       <motion.div
-        initial={{ y: 40, opacity: 0 }}
+        initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4 }}
+        transition={{ delay: 0.6, type: "spring", stiffness: 200, damping: 25 }}
         className="px-6 pb-12 space-y-3"
       >
         <button
@@ -50,10 +83,13 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
         </button>
         <button
           onClick={() => onLogin("Guest")}
-          className="w-full ts-glass text-primary-foreground font-bold py-4 px-6 text-[15px] rounded-2xl transition active:scale-95"
+          className="w-full bg-primary-foreground/10 backdrop-blur-sm text-primary-foreground font-bold py-4 px-6 text-[15px] rounded-2xl border border-primary-foreground/20 transition active:scale-95"
         >
           Continue as Guest
         </button>
+        <p className="text-center text-[10px] text-primary-foreground/30 mt-2">
+          By continuing, you agree to our Terms & Privacy Policy
+        </p>
       </motion.div>
     </div>
   );
