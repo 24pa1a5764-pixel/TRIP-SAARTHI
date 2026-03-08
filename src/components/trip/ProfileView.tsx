@@ -15,6 +15,7 @@ interface ProfileViewProps {
 }
 
 export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip, onLogout, onGenerateStory, onSettings }: ProfileViewProps) {
+  const { t } = useTranslation();
   return (
     <div className="h-full flex flex-col">
       {/* Profile Header */}
