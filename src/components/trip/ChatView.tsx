@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Bot, Send, Sparkles } from "lucide-react";
 import { getChatResponse, type ChatMessage } from "@/lib/tripData";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface ChatViewProps {
   messages: ChatMessage[];
