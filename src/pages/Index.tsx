@@ -29,6 +29,13 @@ import CarbonFootprintView from "@/components/trip/CarbonFootprintView";
 import StoryGeneratorView from "@/components/trip/StoryGeneratorView";
 import CommunityChat from "@/components/trip/CommunityChat";
 import SafetyRouteView from "@/components/trip/SafetyRouteView";
+import FoodFinderView from "@/components/trip/FoodFinderView";
+import WeatherAlertsView from "@/components/trip/WeatherAlertsView";
+import TravelBadgesView from "@/components/trip/TravelBadgesView";
+import TransportFinderView from "@/components/trip/TransportFinderView";
+import FestivalEventsView from "@/components/trip/FestivalEventsView";
+import LanguageAssistantView from "@/components/trip/LanguageAssistantView";
+import PhotoSpotFinderView from "@/components/trip/PhotoSpotFinderView";
 import {
   generateMockItinerary,
   generateMockPackingList,
