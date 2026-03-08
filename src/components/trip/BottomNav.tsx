@@ -1,4 +1,4 @@
-import { Home, MessageCircle, UserCircle, Map } from "lucide-react";
+import { Home, MessageCircle, UserCircle, Map, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface BottomNavProps {
@@ -10,6 +10,7 @@ interface BottomNavProps {
 const tabs = [
   { id: "home", icon: Home, label: "Home" },
   { id: "discover", icon: Map, label: "Discover" },
+  { id: "community", icon: Users, label: "Community" },
   { id: "chat", icon: MessageCircle, label: "Saarthi AI" },
   { id: "profile", icon: UserCircle, label: "Profile" },
 ];
@@ -35,13 +36,8 @@ export default function BottomNav({ active, setActive, cartCount = 0 }: BottomNa
             )}
             <div className="relative">
               <Icon className={`w-5 h-5 mb-1 transition ${isActive ? "text-primary scale-110" : "text-muted-foreground"}`} />
-              {t.id === "chat" && cartCount > 0 && (
-                <span className="absolute -top-1 -right-2 w-4 h-4 bg-ts-rose text-primary-foreground text-[8px] font-black rounded-full flex items-center justify-center">
-                  !
-                </span>
-              )}
             </div>
-            <span className={`text-[10px] font-semibold ${isActive ? "text-primary" : "text-muted-foreground"}`}>
+            <span className={`text-[9px] font-semibold ${isActive ? "text-primary" : "text-muted-foreground"}`}>
               {t.label}
             </span>
           </button>

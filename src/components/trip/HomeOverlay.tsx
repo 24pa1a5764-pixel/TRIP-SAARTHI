@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import {
   Search, Landmark, Sunset, Coffee, Briefcase, ShieldAlert,
   ChevronRight, Wand2, Star, Zap, TrendingUp, Mountain,
+  Heart, Gem, Users, Palette, AlertTriangle, Leaf
 } from "lucide-react";
 import type { UserData, Place } from "@/lib/tripData";
 import { MOCK_DATA } from "@/lib/tripData";
@@ -14,6 +15,12 @@ interface HomeOverlayProps {
   onCategoryClick: (cat: string) => void;
   onSafetyClick: () => void;
   onCartClick: () => void;
+  onMoodClick: () => void;
+  onHiddenGemsClick: () => void;
+  onCommunityClick: () => void;
+  onEmergencyClick: () => void;
+  onBudgetClick: () => void;
+  onCarbonClick: () => void;
 }
 
 const categories = [
@@ -26,20 +33,23 @@ const categories = [
 ];
 
 const trending: Place[] = [
-  MOCK_DATA.heritage[0], // Taj Mahal
-  MOCK_DATA.nature[1], // Pangong Lake
-  MOCK_DATA.adventure?.[0], // Rishikesh
+  MOCK_DATA.heritage[0],
+  MOCK_DATA.nature[1],
+  MOCK_DATA.adventure?.[0],
 ].filter(Boolean) as Place[];
 
 export default function HomeOverlay({
-  user,
-  cartCount,
-  onSearch,
-  onStartJourney,
-  onCategoryClick,
-  onSafetyClick,
-  onCartClick,
+  user, cartCount, onSearch, onStartJourney, onCategoryClick,
+  onSafetyClick, onCartClick, onMoodClick, onHiddenGemsClick,
+  onCommunityClick, onEmergencyClick, onBudgetClick, onCarbonClick,
 }: HomeOverlayProps) {
+  const quickFeatures = [
+    { icon: Palette, label: "Mood Match", color: "text-ts-purple", bg: "bg-ts-purple/10", onClick: onMoodClick },
+    { icon: Gem, label: "Hidden Gems", color: "text-ts-sky", bg: "bg-ts-sky/10", onClick: onHiddenGemsClick },
+    { icon: Users, label: "Community", color: "text-ts-green", bg: "bg-ts-green/10", onClick: onCommunityClick },
+    { icon: Leaf, label: "Eco Track", color: "text-ts-green", bg: "bg-ts-green/10", onClick: onCarbonClick },
+  ];
+
   return (
     <div className="h-full overflow-y-auto ts-scrollbar-hide">
       {/* Header */}
@@ -54,10 +64,16 @@ export default function HomeOverlay({
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={onSafetyClick}
-            className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center"
+            onClick={onEmergencyClick}
+            className="w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center active:scale-95 transition"
           >
-            <ShieldAlert className="w-4 h-4 text-destructive" />
+            <AlertTriangle className="w-4 h-4 text-destructive" />
+          </button>
+          <button
+            onClick={onSafetyClick}
+            className="w-10 h-10 rounded-xl bg-ts-saffron/10 flex items-center justify-center active:scale-95 transition"
+          >
+            <ShieldAlert className="w-4 h-4 text-ts-saffron" />
           </button>
           <img
             src={user.avatar}
@@ -93,7 +109,7 @@ export default function HomeOverlay({
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="px-5 mb-5"
+        className="px-5 mb-4"
       >
         <div className="ts-gradient-hero rounded-3xl p-5 ts-shadow-elevated relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_80%_20%,white_0%,transparent_60%)]" />
@@ -120,12 +136,41 @@ export default function HomeOverlay({
         </div>
       </motion.div>
 
+      {/* Quick Features */}
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.12 }}
+        className="px-5 mb-4"
+      >
+        <div className="flex gap-2 overflow-x-auto ts-scrollbar-hide pb-1">
+          {quickFeatures.map((feat, i) => {
+            const Icon = feat.icon;
+            return (
+              <motion.button
+                key={feat.label}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.15 + i * 0.04 }}
+                onClick={feat.onClick}
+                className="shrink-0 flex items-center gap-2 bg-card px-3.5 py-2.5 rounded-xl ts-shadow-card border border-border active:scale-95 transition"
+              >
+                <div className={`${feat.bg} p-1.5 rounded-lg`}>
+                  <Icon className={`w-3.5 h-3.5 ${feat.color}`} />
+                </div>
+                <span className="text-[10px] font-bold text-foreground whitespace-nowrap">{feat.label}</span>
+              </motion.button>
+            );
+          })}
+        </div>
+      </motion.div>
+
       {/* Categories */}
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.15 }}
-        className="px-5 mb-5"
+        className="px-5 mb-4"
       >
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-display font-bold text-foreground">Explore Categories</h3>
@@ -188,10 +233,8 @@ export default function HomeOverlay({
         </div>
       </motion.div>
 
-      {/* Spacer for floating cart */}
       {cartCount > 0 && <div className="h-20" />}
 
-      {/* Floating Cart */}
       {cartCount > 0 && (
         <motion.div
           initial={{ y: 40, opacity: 0 }}

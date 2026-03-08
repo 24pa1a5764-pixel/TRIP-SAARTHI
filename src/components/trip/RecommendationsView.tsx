@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, MapPin, Plus, X, Loader2, Star, Clock, ChevronRight, Info } from "lucide-react";
+import { ArrowLeft, MapPin, Plus, X, Star, Clock, ChevronRight, Info, Users, Timer, BookOpen } from "lucide-react";
 import { MOCK_DATA, type Place } from "@/lib/tripData";
+import { getQueuePrediction, getBestVisitTime } from "@/lib/featureData";
 
 interface RecommendationsViewProps {
   category: string;
@@ -9,6 +10,9 @@ interface RecommendationsViewProps {
   toggleCart: (item: Place) => void;
   onBack: () => void;
   onViewCart: () => void;
+  onCrowdDensity: (placeName: string) => void;
+  onEtiquette: (placeName: string) => void;
+  onARHistory: (placeName: string) => void;
 }
 
 const categoryTitles: Record<string, { title: string; emoji: string }> = {
@@ -21,23 +25,14 @@ const categoryTitles: Record<string, { title: string; emoji: string }> = {
 };
 
 export default function RecommendationsView({
-  category,
-  cart,
-  toggleCart,
-  onBack,
-  onViewCart,
+  category, cart, toggleCart, onBack, onViewCart, onCrowdDensity, onEtiquette, onARHistory,
 }: RecommendationsViewProps) {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const places = MOCK_DATA[category] || MOCK_DATA.heritage;
   const catInfo = categoryTitles[category] || { title: category, emoji: "📍" };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="h-full flex flex-col"
-    >
-      {/* Header */}
+    <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="h-full flex flex-col">
       <div className="px-5 pt-4 pb-3 flex items-center gap-3 shrink-0">
         <button onClick={onBack} className="p-2 hover:bg-muted rounded-xl transition">
           <ArrowLeft className="w-5 h-5 text-foreground" />
@@ -53,11 +48,11 @@ export default function RecommendationsView({
         </span>
       </div>
 
-      {/* Place Cards */}
       <div className="flex-1 overflow-y-auto px-5 pb-4 space-y-4 ts-scrollbar-hide">
         {places.map((item, i) => {
           const isSelected = cart.some((c) => c.name === item.name);
           const isExpanded = expandedCard === item.name;
+          const queue = getQueuePrediction(item.name);
           return (
             <motion.div
               key={item.name}
@@ -80,11 +75,19 @@ export default function RecommendationsView({
                     </span>
                   )}
                 </div>
-                {isSelected && (
-                  <div className="absolute top-3 right-3 bg-ts-green text-primary-foreground text-[9px] font-bold px-2 py-1 rounded-lg">
-                    ✓ Added
+                {/* Queue Badge */}
+                <div className="absolute top-3 right-3 flex flex-col gap-1">
+                  {isSelected && (
+                    <div className="bg-ts-green text-primary-foreground text-[9px] font-bold px-2 py-1 rounded-lg">
+                      ✓ Added
+                    </div>
+                  )}
+                  <div className={`text-primary-foreground text-[9px] font-bold px-2 py-1 rounded-lg ${
+                    queue.level === "short" ? "bg-ts-green/90" : queue.level === "medium" ? "bg-ts-saffron/90" : "bg-destructive/90"
+                  }`}>
+                    ⏳ {queue.currentWait}
                   </div>
-                )}
+                </div>
               </div>
 
               <div className="p-4">
@@ -120,6 +123,28 @@ export default function RecommendationsView({
                   </motion.p>
                 )}
 
+                {/* Feature Quick Actions */}
+                <div className="flex gap-1.5 mt-2.5 overflow-x-auto ts-scrollbar-hide">
+                  <button
+                    onClick={() => onCrowdDensity(item.name)}
+                    className="shrink-0 flex items-center gap-1 bg-muted/50 px-2.5 py-1.5 rounded-lg text-[9px] font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 transition"
+                  >
+                    <Users className="w-3 h-3" /> Crowd
+                  </button>
+                  <button
+                    onClick={() => onEtiquette(item.name)}
+                    className="shrink-0 flex items-center gap-1 bg-muted/50 px-2.5 py-1.5 rounded-lg text-[9px] font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 transition"
+                  >
+                    <BookOpen className="w-3 h-3" /> Etiquette
+                  </button>
+                  <button
+                    onClick={() => onARHistory(item.name)}
+                    className="shrink-0 flex items-center gap-1 bg-muted/50 px-2.5 py-1.5 rounded-lg text-[9px] font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 transition"
+                  >
+                    <Timer className="w-3 h-3" /> History
+                  </button>
+                </div>
+
                 <button
                   onClick={() => toggleCart(item)}
                   className={`w-full mt-3 text-[11px] font-bold py-2.5 rounded-xl transition active:scale-[0.98] flex items-center justify-center gap-1.5 ${
@@ -129,13 +154,9 @@ export default function RecommendationsView({
                   }`}
                 >
                   {isSelected ? (
-                    <>
-                      <X className="w-3 h-3" /> REMOVE FROM TRIP
-                    </>
+                    <><X className="w-3 h-3" /> REMOVE FROM TRIP</>
                   ) : (
-                    <>
-                      <Plus className="w-3 h-3" /> ADD TO TRIP
-                    </>
+                    <><Plus className="w-3 h-3" /> ADD TO TRIP</>
                   )}
                 </button>
               </div>
@@ -144,7 +165,6 @@ export default function RecommendationsView({
         })}
       </div>
 
-      {/* Bottom CTA */}
       {cart.length > 0 && (
         <div className="p-5 pt-2 shrink-0">
           <button

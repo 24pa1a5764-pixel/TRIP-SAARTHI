@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Eye, Trash2, LogOut, MapPin, Settings, ChevronRight, Compass, Star } from "lucide-react";
+import { Eye, Trash2, LogOut, MapPin, Compass, Star, BookOpen } from "lucide-react";
 import type { UserData, SavedTrip } from "@/lib/tripData";
 
 interface ProfileViewProps {
@@ -8,26 +8,22 @@ interface ProfileViewProps {
   onViewTrip: (trip: SavedTrip) => void;
   onDeleteTrip: (id: number) => void;
   onLogout: () => void;
+  onGenerateStory: (trip: SavedTrip) => void;
 }
 
-export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip, onLogout }: ProfileViewProps) {
+export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip, onLogout, onGenerateStory }: ProfileViewProps) {
   return (
     <div className="h-full flex flex-col">
       {/* Profile Header */}
       <div className="ts-gradient-hero px-5 pt-8 pb-6 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_80%,white_0%,transparent_60%)]" />
         <div className="relative z-10 flex items-center gap-4">
-          <img
-            src={user.avatar}
-            alt={user.name}
-            className="w-16 h-16 rounded-2xl border-2 border-primary-foreground/20 shadow-lg"
-          />
+          <img src={user.avatar} alt={user.name} className="w-16 h-16 rounded-2xl border-2 border-primary-foreground/20 shadow-lg" />
           <div className="flex-1">
             <h2 className="text-lg font-display font-bold text-primary-foreground">{user.name}</h2>
             <p className="text-xs text-primary-foreground/50">{user.email}</p>
           </div>
         </div>
-        {/* Stats */}
         <div className="relative z-10 flex gap-3 mt-4">
           {[
             { label: "Trips", value: savedTrips.length },
@@ -42,7 +38,6 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
         </div>
       </div>
 
-      {/* Saved Trips */}
       <div className="flex-1 overflow-y-auto px-5 py-4 ts-scrollbar-hide">
         <h3 className="text-xs font-bold text-muted-foreground uppercase mb-3">Saved Trips</h3>
         {savedTrips.length === 0 ? (
@@ -66,21 +61,15 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <p className="text-sm font-bold text-foreground">{trip.data.title}</p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">
-                      📅 {trip.date} • {trip.places.length} places
-                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">📅 {trip.date} • {trip.places.length} places</p>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {trip.places.slice(0, 3).map(p => (
-                    <span key={p} className="text-[9px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-md">
-                      {p}
-                    </span>
+                    <span key={p} className="text-[9px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-md">{p}</span>
                   ))}
                   {trip.places.length > 3 && (
-                    <span className="text-[9px] bg-muted text-muted-foreground font-bold px-2 py-0.5 rounded-md">
-                      +{trip.places.length - 3} more
-                    </span>
+                    <span className="text-[9px] bg-muted text-muted-foreground font-bold px-2 py-0.5 rounded-md">+{trip.places.length - 3} more</span>
                   )}
                 </div>
                 <div className="flex gap-2">
@@ -88,7 +77,13 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
                     onClick={() => onViewTrip(trip)}
                     className="flex-1 bg-primary/10 text-primary text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition active:scale-95"
                   >
-                    <Eye className="w-3.5 h-3.5" /> View Plan
+                    <Eye className="w-3.5 h-3.5" /> View
+                  </button>
+                  <button
+                    onClick={() => onGenerateStory(trip)}
+                    className="flex-1 bg-ts-saffron/10 text-ts-saffron text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition active:scale-95"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" /> Story
                   </button>
                   <button
                     onClick={() => onDeleteTrip(trip.id)}
@@ -103,7 +98,6 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
         )}
       </div>
 
-      {/* Logout */}
       <div className="p-5 pt-2 shrink-0">
         <button
           onClick={onLogout}
