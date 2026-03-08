@@ -92,7 +92,7 @@ export default function HomeOverlay({
         className="px-5 pt-5 pb-2 flex items-center justify-between"
       >
         <div>
-          <p className="text-xs text-muted-foreground">Welcome back 🙏</p>
+          <p className="text-xs text-muted-foreground">{t("welcome_back")}</p>
           <h1 className="text-xl md:text-2xl font-display font-bold text-foreground">{user.name}</h1>
         </div>
         <div className="flex items-center gap-2">
