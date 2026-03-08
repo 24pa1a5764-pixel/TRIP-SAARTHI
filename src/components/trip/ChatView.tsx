@@ -22,6 +22,8 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+  const endRef = useRef<HTMLDivElement>(null);
 
   const sendMessage = async (textOverride?: string) => {
     const text = textOverride || input;
