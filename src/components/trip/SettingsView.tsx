@@ -173,7 +173,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                     <div className="w-9 h-9 rounded-xl bg-ts-saffron/10 flex items-center justify-center">
                       <Shield className="w-4 h-4 text-ts-saffron" />
                     </div>
-                    <p className="text-sm text-foreground">Safety Alerts</p>
+                    <p className="text-sm text-foreground">{t("safety_alerts")}</p>
                   </div>
                   <Switch
                     checked={safetyAlerts}
