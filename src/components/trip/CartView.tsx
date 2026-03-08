@@ -123,7 +123,7 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
           disabled={cart.length === 0}
           className="w-full bg-card border border-border text-foreground font-bold py-3.5 rounded-2xl text-sm ts-shadow-card flex items-center justify-center gap-2 transition active:scale-[0.98] disabled:opacity-40"
         >
-          <Briefcase className="w-4 h-4" /> ✨ Smart Packing List
+          <Briefcase className="w-4 h-4" /> ✨ {t("generate_packing")}
         </button>
         <button
           onClick={onGenerateItinerary}
