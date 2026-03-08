@@ -116,6 +116,7 @@ export default function HomeOverlay({
     onPersonalityClick, onSkillExperienceClick, onAirQualityClick,
     onLostItemClick, onRestStopClick, onTravelRiskClick,
     onDigitalPassportClick, onSunriseSunsetClick, onTravelChallengeClick,
+    onVoiceAssistantClick,
   };
   const { t } = useTranslation();
 
