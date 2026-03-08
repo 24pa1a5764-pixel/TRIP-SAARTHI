@@ -389,6 +389,9 @@ export default function Index() {
                 {subView === "travel_challenge" && (
                   <TravelChallengeView onBack={() => setSubView("home")} />
                 )}
+                {subView === "voice_assistant" && (
+                  <VoiceAssistantView onBack={() => setSubView("home")} />
+                )}
               </>
             )}
 
