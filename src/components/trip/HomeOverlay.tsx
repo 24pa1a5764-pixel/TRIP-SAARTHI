@@ -228,9 +228,9 @@ export default function HomeOverlay({
       <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }} className="px-5 mb-5">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-display font-bold text-foreground flex items-center gap-1.5">
-            <TrendingUp className="w-4 h-4 text-ts-saffron" /> Trending Now
+            <TrendingUp className="w-4 h-4 text-ts-saffron" /> {t("trending_now")}
           </h3>
-          <span className="text-[10px] text-muted-foreground">{trending.length} places</span>
+          <span className="text-[10px] text-muted-foreground">{trending.length} {t("places")}</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {trending.map((place, i) => (
