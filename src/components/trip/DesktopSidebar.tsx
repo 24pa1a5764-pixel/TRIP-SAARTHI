@@ -6,6 +6,8 @@ import {
   AlertTriangle, Wand2, ChevronLeft, ChevronRight, Compass, Settings
 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "@/hooks/useTranslation";
+import type { TranslationKey } from "@/lib/translations";
 
 interface DesktopSidebarProps {
   activeTab: string;
@@ -17,30 +19,31 @@ interface DesktopSidebarProps {
 }
 
 const mainNav = [
-  { id: "home", icon: Home, label: "Home" },
-  { id: "discover", icon: Map, label: "Discover" },
-  { id: "community", icon: Users, label: "Community" },
-  { id: "chat", icon: MessageCircle, label: "Saarthi AI" },
-  { id: "profile", icon: UserCircle, label: "Profile" },
+  { id: "home", icon: Home, labelKey: "nav_home" as TranslationKey },
+  { id: "discover", icon: Map, labelKey: "nav_discover" as TranslationKey },
+  { id: "community", icon: Users, labelKey: "nav_community" as TranslationKey },
+  { id: "chat", icon: MessageCircle, labelKey: "nav_chat" as TranslationKey },
+  { id: "profile", icon: UserCircle, labelKey: "nav_profile" as TranslationKey },
 ];
 
 const features = [
-  { id: "food_finder", icon: Utensils, label: "Food Finder", color: "text-ts-rose", bg: "bg-ts-rose/10" },
-  { id: "weather", icon: CloudSun, label: "Weather", color: "text-ts-sky", bg: "bg-ts-sky/10" },
-  { id: "mood", icon: Palette, label: "Mood Match", color: "text-ts-purple", bg: "bg-ts-purple/10" },
-  { id: "hidden_gems", icon: Gem, label: "Hidden Gems", color: "text-ts-sky", bg: "bg-ts-sky/10" },
-  { id: "badges", icon: Medal, label: "Badges", color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
-  { id: "transport", icon: Bus, label: "Transport", color: "text-ts-green", bg: "bg-ts-green/10" },
-  { id: "festivals", icon: PartyPopper, label: "Festivals", color: "text-ts-purple", bg: "bg-ts-purple/10" },
-  { id: "language", icon: Globe, label: "Translator", color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
-  { id: "photo_spots", icon: Camera, label: "Photo Spots", color: "text-ts-sky", bg: "bg-ts-sky/10" },
-  { id: "carbon", icon: Leaf, label: "Eco Track", color: "text-ts-green", bg: "bg-ts-green/10" },
+  { id: "food_finder", icon: Utensils, labelKey: "feat_food_finder" as TranslationKey, color: "text-ts-rose", bg: "bg-ts-rose/10" },
+  { id: "weather", icon: CloudSun, labelKey: "feat_weather" as TranslationKey, color: "text-ts-sky", bg: "bg-ts-sky/10" },
+  { id: "mood", icon: Palette, labelKey: "feat_mood_match" as TranslationKey, color: "text-ts-purple", bg: "bg-ts-purple/10" },
+  { id: "hidden_gems", icon: Gem, labelKey: "feat_hidden_gems" as TranslationKey, color: "text-ts-sky", bg: "bg-ts-sky/10" },
+  { id: "badges", icon: Medal, labelKey: "feat_badges" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
+  { id: "transport", icon: Bus, labelKey: "feat_transport" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10" },
+  { id: "festivals", icon: PartyPopper, labelKey: "feat_festivals" as TranslationKey, color: "text-ts-purple", bg: "bg-ts-purple/10" },
+  { id: "language", icon: Globe, labelKey: "feat_translator" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
+  { id: "photo_spots", icon: Camera, labelKey: "feat_photo_spots" as TranslationKey, color: "text-ts-sky", bg: "bg-ts-sky/10" },
+  { id: "carbon", icon: Leaf, labelKey: "feat_eco_track" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10" },
 ];
 
 export default function DesktopSidebar({
   activeTab, setActiveTab, onFeatureClick, onSafetyClick, onEmergencyClick, cartCount
 }: DesktopSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <motion.div
@@ -63,7 +66,7 @@ export default function DesktopSidebar({
 
       {/* Main nav */}
       <div className="p-3 space-y-1">
-        {!collapsed && <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider px-3 mb-2">Navigation</p>}
+        {!collapsed && <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider px-3 mb-2">{t("navigation")}</p>}
         {mainNav.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -74,7 +77,7 @@ export default function DesktopSidebar({
               className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2.5 rounded-xl transition text-left ${isActive ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
             >
               <Icon className={`w-4.5 h-4.5 shrink-0 ${isActive ? "text-primary" : ""}`} />
-              {!collapsed && <span className={`text-xs font-medium ${isActive ? "font-bold" : ""}`}>{item.label}</span>}
+              {!collapsed && <span className={`text-xs font-medium ${isActive ? "font-bold" : ""}`}>{t(item.labelKey)}</span>}
               {!collapsed && item.id === "home" && cartCount > 0 && (
                 <span className="ml-auto text-[9px] font-bold bg-primary text-primary-foreground w-5 h-5 rounded-full flex items-center justify-center">{cartCount}</span>
               )}
@@ -88,7 +91,7 @@ export default function DesktopSidebar({
 
       {/* Quick Features */}
       <div className="p-3 flex-1 overflow-y-auto ts-scrollbar-hide space-y-1">
-        {!collapsed && <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider px-3 mb-2">Quick Tools</p>}
+        {!collapsed && <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider px-3 mb-2">{t("quick_tools")}</p>}
         {features.map((feat) => {
           const Icon = feat.icon;
           return (
@@ -100,7 +103,7 @@ export default function DesktopSidebar({
               <div className={`${feat.bg} p-1.5 rounded-lg shrink-0`}>
                 <Icon className={`w-3.5 h-3.5 ${feat.color}`} />
               </div>
-              {!collapsed && <span className="text-[11px] font-medium">{feat.label}</span>}
+              {!collapsed && <span className="text-[11px] font-medium">{t(feat.labelKey)}</span>}
             </button>
           );
         })}
@@ -112,21 +115,21 @@ export default function DesktopSidebar({
           className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition`}
         >
           <Settings className="w-4 h-4 shrink-0" />
-          {!collapsed && <span className="text-[11px] font-medium">Settings</span>}
+          {!collapsed && <span className="text-[11px] font-medium">{t("settings")}</span>}
         </button>
         <button
           onClick={onSafetyClick}
           className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-xl text-muted-foreground hover:bg-ts-saffron/10 hover:text-ts-saffron transition`}
         >
           <ShieldAlert className="w-4 h-4 text-ts-saffron shrink-0" />
-          {!collapsed && <span className="text-[11px] font-medium">Safety Info</span>}
+          {!collapsed && <span className="text-[11px] font-medium">{t("safety_info")}</span>}
         </button>
         <button
           onClick={onEmergencyClick}
           className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-xl text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition`}
         >
           <AlertTriangle className="w-4 h-4 text-destructive shrink-0" />
-          {!collapsed && <span className="text-[11px] font-medium">Emergency</span>}
+          {!collapsed && <span className="text-[11px] font-medium">{t("emergency")}</span>}
         </button>
       </div>
 

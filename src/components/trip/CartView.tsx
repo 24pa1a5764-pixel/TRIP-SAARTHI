@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, MapPin, Trash2, Wand2, Briefcase, ChevronRight, Star, TrendingDown, Leaf } from "lucide-react";
 import type { Place } from "@/lib/tripData";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface CartViewProps {
   cart: Place[];
@@ -13,6 +14,7 @@ interface CartViewProps {
 }
 
 export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary, onGeneratePacking, onBudgetOptimizer, onCarbonFootprint }: CartViewProps) {
+  const { t } = useTranslation();
   const uniqueLocations = [...new Set(cart.map(p => p.loc))];
 
   return (
@@ -26,9 +28,9 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
           <ArrowLeft className="w-5 h-5 text-foreground" />
         </button>
         <div className="flex-1">
-          <h2 className="text-lg font-display font-bold text-foreground">Trip Chart</h2>
+          <h2 className="text-lg font-display font-bold text-foreground">{t("trip_chart")}</h2>
           <p className="text-[10px] text-muted-foreground">
-            {cart.length} places • {uniqueLocations.length} cities
+            {cart.length} {t("places")} • {uniqueLocations.length} {t("cities")}
           </p>
         </div>
       </div>
@@ -57,10 +59,8 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
             <div className="w-20 h-20 rounded-3xl bg-muted flex items-center justify-center mb-4">
               <MapPin className="w-8 h-8 text-muted-foreground/30" />
             </div>
-            <p className="text-sm font-bold text-foreground mb-1">No places added yet</p>
-            <p className="text-xs text-muted-foreground mb-4">
-              Go back and explore categories to add destinations
-            </p>
+            <p className="text-sm font-bold text-foreground mb-1">{t("empty_cart")}</p>
+            <p className="text-xs text-muted-foreground mb-4">{t("empty_cart_desc")}</p>
             <button onClick={onBack} className="text-xs font-bold text-primary bg-primary/10 px-4 py-2 rounded-xl">
               ← Explore Places
             </button>
@@ -114,7 +114,7 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
               onClick={onCarbonFootprint}
               className="flex-1 bg-card border border-border text-foreground font-bold py-2.5 rounded-xl text-[10px] ts-shadow-card flex items-center justify-center gap-1.5 transition active:scale-[0.98]"
             >
-              <Leaf className="w-3.5 h-3.5" /> Eco Track
+              <Leaf className="w-3.5 h-3.5" /> {t("feat_eco_track")}
             </button>
           </div>
         )}
@@ -123,14 +123,14 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
           disabled={cart.length === 0}
           className="w-full bg-card border border-border text-foreground font-bold py-3.5 rounded-2xl text-sm ts-shadow-card flex items-center justify-center gap-2 transition active:scale-[0.98] disabled:opacity-40"
         >
-          <Briefcase className="w-4 h-4" /> ✨ Smart Packing List
+          <Briefcase className="w-4 h-4" /> ✨ {t("generate_packing")}
         </button>
         <button
           onClick={onGenerateItinerary}
           disabled={cart.length === 0}
           className="w-full ts-gradient-hero text-primary-foreground font-bold py-4 rounded-2xl text-sm ts-shadow-elevated flex items-center justify-center gap-2 transition active:scale-[0.98] disabled:opacity-40"
         >
-          <Wand2 className="w-4 h-4" /> Build AI Itinerary
+          <Wand2 className="w-4 h-4" /> {t("generate_itinerary")}
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

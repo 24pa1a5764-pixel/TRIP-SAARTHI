@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Bot, Send, Sparkles } from "lucide-react";
 import { getChatResponse, type ChatMessage } from "@/lib/tripData";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface ChatViewProps {
   messages: ChatMessage[];
@@ -21,6 +22,7 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   const sendMessage = async (textOverride?: string) => {
     const text = textOverride || input;
@@ -51,7 +53,7 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
           <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-ts-green rounded-full border-2 border-card" />
         </div>
         <div className="flex-1">
-          <h2 className="text-sm font-display font-bold text-foreground">Saarthi AI</h2>
+          <h2 className="text-sm font-display font-bold text-foreground">{t("nav_chat")}</h2>
           <p className="text-[10px] text-ts-green font-bold">Online • Your travel expert</p>
         </div>
         <div className="bg-primary/10 px-2.5 py-1 rounded-lg flex items-center gap-1">
@@ -69,7 +71,7 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
             </div>
             <p className="text-sm font-bold text-foreground mb-1">Namaste! 🙏</p>
             <p className="text-xs text-muted-foreground max-w-[250px]">
-              I'm your personal India travel expert. Ask me anything about destinations, safety, food, or culture!
+              {t("saarthi_welcome")}
             </p>
           </div>
         )}
@@ -140,7 +142,7 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          placeholder="Ask Saarthi anything..."
+          placeholder={t("ask_anything")}
           className="flex-1 bg-muted border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-primary transition text-foreground placeholder:text-muted-foreground"
         />
         <button

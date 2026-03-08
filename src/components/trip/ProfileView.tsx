@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Eye, Trash2, LogOut, MapPin, Compass, Star, BookOpen, Settings } from "lucide-react";
 import type { UserData, SavedTrip } from "@/lib/tripData";
 import SwipeToDelete from "@/components/trip/SwipeToDelete";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface ProfileViewProps {
   user: UserData;
@@ -14,6 +15,7 @@ interface ProfileViewProps {
 }
 
 export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip, onLogout, onGenerateStory, onSettings }: ProfileViewProps) {
+  const { t } = useTranslation();
   return (
     <div className="h-full flex flex-col">
       {/* Profile Header */}
@@ -28,9 +30,9 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
         </div>
         <div className="relative z-10 flex gap-3 mt-4">
           {[
-            { label: "Trips", value: savedTrips.length },
-            { label: "Places", value: savedTrips.reduce((a, t) => a + t.places.length, 0) },
-            { label: "Cities", value: [...new Set(savedTrips.flatMap(t => t.places))].length },
+            { label: t("trips"), value: savedTrips.length },
+            { label: t("places_stat"), value: savedTrips.reduce((a, t2) => a + t2.places.length, 0) },
+            { label: t("cities_stat"), value: [...new Set(savedTrips.flatMap(t2 => t2.places))].length },
           ].map(stat => (
             <div key={stat.label} className="flex-1 bg-primary-foreground/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-primary-foreground/10">
               <p className="text-lg font-display font-bold text-primary-foreground">{stat.value}</p>
@@ -41,14 +43,14 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 py-4 ts-scrollbar-hide">
-        <h3 className="text-xs font-bold text-muted-foreground uppercase mb-3">Saved Trips</h3>
+        <h3 className="text-xs font-bold text-muted-foreground uppercase mb-3">{t("saved_trips")}</h3>
         {savedTrips.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="w-16 h-16 rounded-3xl bg-muted flex items-center justify-center mb-3">
               <Compass className="w-8 h-8 text-muted-foreground/20" />
             </div>
-            <p className="text-sm font-bold text-foreground mb-1">No saved trips yet</p>
-            <p className="text-xs text-muted-foreground">Plan your first adventure to see it here!</p>
+            <p className="text-sm font-bold text-foreground mb-1">{t("no_saved_trips")}</p>
+            <p className="text-xs text-muted-foreground">{t("no_saved_trips_desc")}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -79,13 +81,13 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
                       onClick={() => onViewTrip(trip)}
                       className="flex-1 bg-primary/10 text-primary text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 ts-touch-btn"
                     >
-                      <Eye className="w-3.5 h-3.5" /> View
+                    <Eye className="w-3.5 h-3.5" /> {t("view")}
                     </button>
                     <button
                       onClick={() => onGenerateStory(trip)}
                       className="flex-1 bg-ts-saffron/10 text-ts-saffron text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 ts-touch-btn"
                     >
-                      <BookOpen className="w-3.5 h-3.5" /> Story
+                      <BookOpen className="w-3.5 h-3.5" /> {t("story")}
                     </button>
                     <button
                       onClick={() => onDeleteTrip(trip.id)}
@@ -107,14 +109,14 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
             onClick={onSettings}
             className="w-full bg-primary/10 text-primary font-bold py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 transition active:scale-95"
           >
-            <Settings className="w-4 h-4" /> Settings
+            <Settings className="w-4 h-4" /> {t("settings")}
           </button>
         )}
         <button
           onClick={onLogout}
           className="w-full bg-destructive/10 text-destructive font-bold py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 transition active:scale-95"
         >
-          <LogOut className="w-4 h-4" /> Sign Out
+          <LogOut className="w-4 h-4" /> {t("sign_out")}
         </button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Sun, Moon, Bell, BellOff, Globe, ChevronRight, Check, Shield, Users, MapPin } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { useSettings, LANGUAGES } from "@/hooks/useSettings";
+import { useTranslation } from "@/hooks/useTranslation";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 
@@ -11,6 +12,7 @@ interface SettingsViewProps {
 
 export default function SettingsView({ onBack }: SettingsViewProps) {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
   const { language, notificationsEnabled, tripReminders, safetyAlerts, communityUpdates, updateSetting } = useSettings();
   const [showLangPicker, setShowLangPicker] = useState(false);
 
@@ -23,7 +25,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
           <button onClick={() => setShowLangPicker(false)} className="p-2 -ml-2 rounded-xl hover:bg-muted transition">
             <ArrowLeft className="w-5 h-5 text-foreground" />
           </button>
-          <h2 className="text-base font-display font-bold text-foreground">Select Language</h2>
+          <h2 className="text-base font-display font-bold text-foreground">{t("select_language")}</h2>
         </div>
         <div className="flex-1 overflow-y-auto ts-scrollbar-hide px-5 py-3">
           <div className="space-y-1">
@@ -60,13 +62,13 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
         <button onClick={onBack} className="p-2 -ml-2 rounded-xl hover:bg-muted transition">
           <ArrowLeft className="w-5 h-5 text-foreground" />
         </button>
-        <h2 className="text-base font-display font-bold text-foreground">Settings</h2>
+        <h2 className="text-base font-display font-bold text-foreground">{t("settings")}</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto ts-scrollbar-hide px-5 py-4 space-y-6">
         {/* Appearance */}
         <section>
-          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Appearance</h3>
+          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">{t("appearance")}</h3>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -84,8 +86,8 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                   </div>
                 )}
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Dark Mode</p>
-                  <p className="text-[10px] text-muted-foreground">{theme === "dark" ? "Currently dark" : "Currently light"}</p>
+                  <p className="text-sm font-semibold text-foreground">{t("dark_mode")}</p>
+                  <p className="text-[10px] text-muted-foreground">{theme === "dark" ? t("currently_dark") : t("currently_light")}</p>
                 </div>
               </div>
               <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
@@ -95,7 +97,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
 
         {/* Language */}
         <section>
-          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Language</h3>
+          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">{t("language")}</h3>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -111,7 +113,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                   <Globe className="w-4.5 h-4.5 text-primary" />
                 </div>
                 <div className="text-left">
-                  <p className="text-sm font-semibold text-foreground">App Language</p>
+                  <p className="text-sm font-semibold text-foreground">{t("app_language")}</p>
                   <p className="text-[10px] text-muted-foreground">
                     {currentLang?.label} ({currentLang?.native})
                   </p>
@@ -124,7 +126,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
 
         {/* Notifications */}
         <section>
-          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Notifications</h3>
+          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">{t("notifications")}</h3>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -142,8 +144,8 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                   )}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Notifications</p>
-                  <p className="text-[10px] text-muted-foreground">{notificationsEnabled ? "Enabled" : "Disabled"}</p>
+                  <p className="text-sm font-semibold text-foreground">{t("notifications")}</p>
+                  <p className="text-[10px] text-muted-foreground">{notificationsEnabled ? t("enabled") : t("disabled")}</p>
                 </div>
               </div>
               <Switch
@@ -159,7 +161,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                     <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
                       <MapPin className="w-4 h-4 text-primary" />
                     </div>
-                    <p className="text-sm text-foreground">Trip Reminders</p>
+                    <p className="text-sm text-foreground">{t("trip_reminders")}</p>
                   </div>
                   <Switch
                     checked={tripReminders}
@@ -171,7 +173,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                     <div className="w-9 h-9 rounded-xl bg-ts-saffron/10 flex items-center justify-center">
                       <Shield className="w-4 h-4 text-ts-saffron" />
                     </div>
-                    <p className="text-sm text-foreground">Safety Alerts</p>
+                    <p className="text-sm text-foreground">{t("safety_alerts")}</p>
                   </div>
                   <Switch
                     checked={safetyAlerts}
@@ -183,7 +185,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                     <div className="w-9 h-9 rounded-xl bg-ts-purple/10 flex items-center justify-center">
                       <Users className="w-4 h-4 text-ts-purple" />
                     </div>
-                    <p className="text-sm text-foreground">Community Updates</p>
+                    <p className="text-sm text-foreground">{t("community_updates")}</p>
                   </div>
                   <Switch
                     checked={communityUpdates}
