@@ -114,7 +114,7 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
               onClick={onCarbonFootprint}
               className="flex-1 bg-card border border-border text-foreground font-bold py-2.5 rounded-xl text-[10px] ts-shadow-card flex items-center justify-center gap-1.5 transition active:scale-[0.98]"
             >
-              <Leaf className="w-3.5 h-3.5" /> Eco Track
+              <Leaf className="w-3.5 h-3.5" /> {t("feat_eco_track")}
             </button>
           </div>
         )}
