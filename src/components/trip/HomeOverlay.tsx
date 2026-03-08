@@ -250,7 +250,7 @@ export default function HomeOverlay({
               <motion.button key={feat.key} initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.15 + i * 0.04 }}
                 onClick={featureClickMap[feat.key]} className="shrink-0 flex items-center gap-2 bg-card px-3.5 py-2.5 rounded-xl ts-shadow-card border border-border active:scale-95 transition">
                 <div className={`${feat.bg} p-1.5 rounded-lg`}><Icon className={`w-3.5 h-3.5 ${feat.color}`} /></div>
-                <span className="text-[10px] font-bold text-foreground whitespace-nowrap">{t(feat.labelKey)}</span>
+                <span className="text-[10px] font-bold text-foreground whitespace-nowrap">{'labelKey' in feat ? t(feat.labelKey as TranslationKey) : (feat as any).label}</span>
               </motion.button>
             );
           })}

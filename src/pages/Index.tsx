@@ -39,6 +39,18 @@ import LanguageAssistantView from "@/components/trip/LanguageAssistantView";
 import PhotoSpotFinderView from "@/components/trip/PhotoSpotFinderView";
 import SettingsView from "@/components/trip/SettingsView";
 import SwipeableTabs from "@/components/trip/SwipeableTabs";
+import ScamAlertView from "@/components/trip/ScamAlertView";
+import TimeOptimizerView from "@/components/trip/TimeOptimizerView";
+import SoloSafetyView from "@/components/trip/SoloSafetyView";
+import PersonalityAnalyzerView from "@/components/trip/PersonalityAnalyzerView";
+import SkillExperienceView from "@/components/trip/SkillExperienceView";
+import AirQualityView from "@/components/trip/AirQualityView";
+import LostItemFinderView from "@/components/trip/LostItemFinderView";
+import RestStopFinderView from "@/components/trip/RestStopFinderView";
+import TravelRiskView from "@/components/trip/TravelRiskView";
+import DigitalPassportView from "@/components/trip/DigitalPassportView";
+import SunriseSunsetView from "@/components/trip/SunriseSunsetView";
+import TravelChallengeView from "@/components/trip/TravelChallengeView";
 import {
   generateMockItinerary,
   generateMockPackingList,
