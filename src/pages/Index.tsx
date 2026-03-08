@@ -317,6 +317,9 @@ export default function Index() {
                 {subView === "photo_spots" && (
                   <PhotoSpotFinderView onBack={() => setSubView("home")} />
                 )}
+                {subView === "settings" && (
+                  <SettingsView onBack={() => setSubView("home")} />
+                )}
               </>
             )}
 
