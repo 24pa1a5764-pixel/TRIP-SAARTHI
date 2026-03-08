@@ -66,7 +66,7 @@ export default function DesktopSidebar({
 
       {/* Main nav */}
       <div className="p-3 space-y-1">
-        {!collapsed && <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider px-3 mb-2">Navigation</p>}
+        {!collapsed && <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider px-3 mb-2">{t("navigation")}</p>}
         {mainNav.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
