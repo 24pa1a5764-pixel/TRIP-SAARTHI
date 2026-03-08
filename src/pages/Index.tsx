@@ -29,6 +29,13 @@ import CarbonFootprintView from "@/components/trip/CarbonFootprintView";
 import StoryGeneratorView from "@/components/trip/StoryGeneratorView";
 import CommunityChat from "@/components/trip/CommunityChat";
 import SafetyRouteView from "@/components/trip/SafetyRouteView";
+import FoodFinderView from "@/components/trip/FoodFinderView";
+import WeatherAlertsView from "@/components/trip/WeatherAlertsView";
+import TravelBadgesView from "@/components/trip/TravelBadgesView";
+import TransportFinderView from "@/components/trip/TransportFinderView";
+import FestivalEventsView from "@/components/trip/FestivalEventsView";
+import LanguageAssistantView from "@/components/trip/LanguageAssistantView";
+import PhotoSpotFinderView from "@/components/trip/PhotoSpotFinderView";
 import {
   generateMockItinerary,
   generateMockPackingList,
@@ -192,6 +199,13 @@ export default function Index() {
                     onEmergencyClick={() => setEmergencyOpen(true)}
                     onBudgetClick={() => setSubView("budget")}
                     onCarbonClick={() => setSubView("carbon")}
+                    onFoodFinderClick={() => setSubView("food_finder")}
+                    onWeatherClick={() => setSubView("weather")}
+                    onBadgesClick={() => setSubView("badges")}
+                    onTransportClick={() => setSubView("transport")}
+                    onFestivalsClick={() => setSubView("festivals")}
+                    onLanguageClick={() => setSubView("language")}
+                    onPhotoSpotsClick={() => setSubView("photo_spots")}
                   />
                 )}
                 {subView === "search" && (
@@ -259,6 +273,27 @@ export default function Index() {
                 )}
                 {subView === "story" && selectedTrip && (
                   <StoryGeneratorView trip={selectedTrip} onBack={() => { setSubView("home"); setActiveTab("profile"); }} />
+                )}
+                {subView === "food_finder" && (
+                  <FoodFinderView onBack={() => setSubView("home")} />
+                )}
+                {subView === "weather" && (
+                  <WeatherAlertsView onBack={() => setSubView("home")} />
+                )}
+                {subView === "badges" && (
+                  <TravelBadgesView onBack={() => setSubView("home")} savedTripsCount={savedTrips.length} visitedCategories={cart.map(c => c.category || "")} />
+                )}
+                {subView === "transport" && (
+                  <TransportFinderView city={profile?.city || "Delhi"} onBack={() => setSubView("home")} />
+                )}
+                {subView === "festivals" && (
+                  <FestivalEventsView onBack={() => setSubView("home")} />
+                )}
+                {subView === "language" && (
+                  <LanguageAssistantView onBack={() => setSubView("home")} />
+                )}
+                {subView === "photo_spots" && (
+                  <PhotoSpotFinderView onBack={() => setSubView("home")} />
                 )}
               </>
             )}

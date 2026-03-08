@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import {
   Search, Landmark, Sunset, Coffee, Briefcase, ShieldAlert,
   ChevronRight, Wand2, Star, Zap, TrendingUp, Mountain,
-  Heart, Gem, Users, Palette, AlertTriangle, Leaf
+  Heart, Gem, Users, Palette, AlertTriangle, Leaf,
+  Utensils, CloudSun, Medal, Bus, PartyPopper, Globe, Camera
 } from "lucide-react";
 import type { UserData, Place } from "@/lib/tripData";
 import { MOCK_DATA } from "@/lib/tripData";
@@ -21,6 +22,13 @@ interface HomeOverlayProps {
   onEmergencyClick: () => void;
   onBudgetClick: () => void;
   onCarbonClick: () => void;
+  onFoodFinderClick: () => void;
+  onWeatherClick: () => void;
+  onBadgesClick: () => void;
+  onTransportClick: () => void;
+  onFestivalsClick: () => void;
+  onLanguageClick: () => void;
+  onPhotoSpotsClick: () => void;
 }
 
 const categories = [
@@ -42,10 +50,19 @@ export default function HomeOverlay({
   user, cartCount, onSearch, onStartJourney, onCategoryClick,
   onSafetyClick, onCartClick, onMoodClick, onHiddenGemsClick,
   onCommunityClick, onEmergencyClick, onBudgetClick, onCarbonClick,
+  onFoodFinderClick, onWeatherClick, onBadgesClick, onTransportClick,
+  onFestivalsClick, onLanguageClick, onPhotoSpotsClick,
 }: HomeOverlayProps) {
   const quickFeatures = [
+    { icon: Utensils, label: "Food Finder", color: "text-ts-rose", bg: "bg-ts-rose/10", onClick: onFoodFinderClick },
+    { icon: CloudSun, label: "Weather", color: "text-ts-sky", bg: "bg-ts-sky/10", onClick: onWeatherClick },
     { icon: Palette, label: "Mood Match", color: "text-ts-purple", bg: "bg-ts-purple/10", onClick: onMoodClick },
     { icon: Gem, label: "Hidden Gems", color: "text-ts-sky", bg: "bg-ts-sky/10", onClick: onHiddenGemsClick },
+    { icon: Medal, label: "Badges", color: "text-ts-saffron", bg: "bg-ts-saffron/10", onClick: onBadgesClick },
+    { icon: Bus, label: "Transport", color: "text-ts-green", bg: "bg-ts-green/10", onClick: onTransportClick },
+    { icon: PartyPopper, label: "Festivals", color: "text-ts-purple", bg: "bg-ts-purple/10", onClick: onFestivalsClick },
+    { icon: Globe, label: "Translator", color: "text-ts-saffron", bg: "bg-ts-saffron/10", onClick: onLanguageClick },
+    { icon: Camera, label: "Photo Spots", color: "text-ts-sky", bg: "bg-ts-sky/10", onClick: onPhotoSpotsClick },
     { icon: Users, label: "Community", color: "text-ts-green", bg: "bg-ts-green/10", onClick: onCommunityClick },
     { icon: Leaf, label: "Eco Track", color: "text-ts-green", bg: "bg-ts-green/10", onClick: onCarbonClick },
   ];
