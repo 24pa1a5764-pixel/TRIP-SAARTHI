@@ -13,7 +13,7 @@ export interface Place {
 
 export const MOCK_DATA: Record<string, Place[]> = {
   heritage: [
-    { name: "Taj Mahal", loc: "Agra", img: "https://images.unsplash.com/photo-1564507592209-4b471c0df1b8?w=400&q=80", lat: 27.1751, lng: 78.0421, rating: 4.9, duration: "3-4 hrs", price: "₹50", description: "UNESCO World Heritage Site, one of the seven wonders of the world" },
+    { name: "Taj Mahal", loc: "Agra", img: "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80", lat: 27.1751, lng: 78.0421, rating: 4.9, duration: "3-4 hrs", price: "₹50", description: "UNESCO World Heritage Site, one of the seven wonders of the world" },
     { name: "Lotus Temple", loc: "Delhi", img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&q=80", lat: 28.5535, lng: 77.2588, rating: 4.5, duration: "1-2 hrs", price: "Free", description: "Bahá'í House of Worship, stunning lotus-shaped architecture" },
     { name: "Hawa Mahal", loc: "Jaipur", img: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=400&q=80", lat: 26.9239, lng: 75.8267, rating: 4.6, duration: "1-2 hrs", price: "₹50", description: "Palace of Winds with 953 small windows" },
     { name: "Golden Temple", loc: "Amritsar", img: "https://images.unsplash.com/photo-1589136142558-132d757d5494?w=400&q=80", lat: 31.6200, lng: 74.8765, rating: 4.9, duration: "2-3 hrs", price: "Free", description: "Holiest Gurdwara and spiritual center of Sikhism" },
@@ -22,7 +22,7 @@ export const MOCK_DATA: Record<string, Place[]> = {
   ],
   nature: [
     { name: "Lodhi Garden", loc: "Delhi", img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=80", lat: 28.5933, lng: 77.2195, rating: 4.3, duration: "1-2 hrs", price: "Free", description: "Historic park with tombs from the Lodhi dynasty" },
-    { name: "Pangong Lake", loc: "Ladakh", img: "https://images.unsplash.com/photo-1626083558364-783a45c61ea0?w=400&q=80", lat: 33.7595, lng: 78.6674, rating: 4.8, duration: "Half day", price: "Free", description: "Highest saltwater lake, famous for changing colors" },
+    { name: "Pangong Lake", loc: "Ladakh", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80", lat: 33.7595, lng: 78.6674, rating: 4.8, duration: "Half day", price: "Free", description: "Highest saltwater lake, famous for changing colors" },
     { name: "Alleppey Backwaters", loc: "Kerala", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80", lat: 9.4981, lng: 76.3388, rating: 4.7, duration: "Full day", price: "₹1500+", description: "Serene houseboat experience through palm-lined canals" },
     { name: "Valley of Flowers", loc: "Uttarakhand", img: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=400&q=80", lat: 30.7280, lng: 79.6050, rating: 4.8, duration: "Full day", price: "₹150", description: "UNESCO site with 600+ species of wildflowers" },
     { name: "Dudhsagar Falls", loc: "Goa", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80", lat: 15.3144, lng: 74.3143, rating: 4.5, duration: "Half day", price: "₹400", description: "Spectacular four-tiered waterfall on the Mandovi river" },
@@ -40,7 +40,7 @@ export const MOCK_DATA: Record<string, Place[]> = {
     { name: "Sardar Market", loc: "Jodhpur", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80", lat: 26.2960, lng: 73.0209, rating: 4.3, duration: "2-3 hrs", price: "₹100-300", description: "Rajasthani snacks near the iconic Clock Tower" },
   ],
   adventure: [
-    { name: "Rishikesh Rafting", loc: "Uttarakhand", img: "https://images.unsplash.com/photo-1530866495561-507c83d15e30?w=400&q=80", lat: 30.0869, lng: 78.2676, rating: 4.7, duration: "3-4 hrs", price: "₹1000+", description: "White water rafting on the holy Ganges river" },
+    { name: "Rishikesh Rafting", loc: "Uttarakhand", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80", lat: 30.0869, lng: 78.2676, rating: 4.7, duration: "3-4 hrs", price: "₹1000+", description: "White water rafting on the holy Ganges river" },
     { name: "Manali Paragliding", loc: "Himachal", img: "https://images.unsplash.com/photo-1503435824048-a799a3a84bf7?w=400&q=80", lat: 32.2396, lng: 77.1887, rating: 4.6, duration: "1-2 hrs", price: "₹2500+", description: "Soar over Kullu Valley with Himalayan views" },
     { name: "Goa Water Sports", loc: "Goa", img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80", lat: 15.2993, lng: 74.1240, rating: 4.4, duration: "Half day", price: "₹800+", description: "Jet ski, banana boat, parasailing on golden beaches" },
   ],
