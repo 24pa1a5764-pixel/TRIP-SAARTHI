@@ -267,6 +267,27 @@ export default function Index() {
                 {subView === "story" && selectedTrip && (
                   <StoryGeneratorView trip={selectedTrip} onBack={() => { setSubView("home"); setActiveTab("profile"); }} />
                 )}
+                {subView === "food_finder" && (
+                  <FoodFinderView onBack={() => setSubView("home")} />
+                )}
+                {subView === "weather" && (
+                  <WeatherAlertsView onBack={() => setSubView("home")} />
+                )}
+                {subView === "badges" && (
+                  <TravelBadgesView onBack={() => setSubView("home")} savedTripsCount={savedTrips.length} visitedCategories={cart.map(c => c.category || "")} />
+                )}
+                {subView === "transport" && (
+                  <TransportFinderView city={profile?.city || "Delhi"} onBack={() => setSubView("home")} />
+                )}
+                {subView === "festivals" && (
+                  <FestivalEventsView onBack={() => setSubView("home")} />
+                )}
+                {subView === "language" && (
+                  <LanguageAssistantView onBack={() => setSubView("home")} />
+                )}
+                {subView === "photo_spots" && (
+                  <PhotoSpotFinderView onBack={() => setSubView("home")} />
+                )}
               </>
             )}
 
