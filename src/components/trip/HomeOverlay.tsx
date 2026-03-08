@@ -93,6 +93,7 @@ const quickFeatures = [
   { icon: Globe, label: "Passport", color: "text-primary", bg: "bg-primary/10", key: "onDigitalPassportClick" },
   { icon: Sunrise, label: "Sunrise/Set", color: "text-ts-saffron", bg: "bg-ts-saffron/10", key: "onSunriseSunsetClick" },
   { icon: Target, label: "Challenges", color: "text-ts-rose", bg: "bg-ts-rose/10", key: "onTravelChallengeClick" },
+  { icon: Mic, label: "Voice Guide", color: "text-primary", bg: "bg-primary/10", key: "onVoiceAssistantClick" },
 ];
 
 export default function HomeOverlay({
