@@ -106,6 +106,7 @@ export default function HomeOverlay({
   onPersonalityClick, onSkillExperienceClick, onAirQualityClick,
   onLostItemClick, onRestStopClick, onTravelRiskClick,
   onDigitalPassportClick, onSunriseSunsetClick, onTravelChallengeClick,
+  onVoiceAssistantClick,
 }: HomeOverlayProps) {
   const featureClickMap: Record<string, () => void> = {
     onFoodFinderClick, onWeatherClick, onMoodClick, onHiddenGemsClick,
