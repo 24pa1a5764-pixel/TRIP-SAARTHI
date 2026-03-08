@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Eye, Trash2, LogOut, MapPin, Compass, Star, BookOpen, Settings } from "lucide-react";
 import type { UserData, SavedTrip } from "@/lib/tripData";
 import SwipeToDelete from "@/components/trip/SwipeToDelete";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface ProfileViewProps {
   user: UserData;
