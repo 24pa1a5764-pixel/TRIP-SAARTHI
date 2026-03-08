@@ -128,11 +128,11 @@ export default function HomeOverlay({
                 <span className="text-[10px] text-primary-foreground font-bold">{t("ai_powered")}</span>
               </div>
               <div className="relative z-10">
-                <h2 className="text-lg md:text-xl font-display font-bold text-primary-foreground mb-0.5">Plan Your Dream Trip</h2>
-                <p className="text-primary-foreground/50 text-xs md:text-sm mb-4 max-w-[300px]">Select destinations, set preferences & let AI build your perfect itinerary</p>
+                <h2 className="text-lg md:text-xl font-display font-bold text-primary-foreground mb-0.5">{t("plan_dream_trip")}</h2>
+                <p className="text-primary-foreground/50 text-xs md:text-sm mb-4 max-w-[300px]">{t("plan_dream_desc")}</p>
                 <button onClick={onStartJourney} className="bg-primary-foreground text-primary font-bold text-xs md:text-sm py-3 px-5 md:px-7 rounded-xl flex items-center gap-2 transition active:scale-95 ts-shadow-card">
                   <Wand2 className="w-4 h-4" />
-                  Start Planning
+                  {t("start_planning")}
                   <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
