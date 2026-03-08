@@ -3,7 +3,7 @@ import {
   Home, Map, Users, MessageCircle, UserCircle,
   Utensils, CloudSun, Palette, Gem, Medal, Bus,
   PartyPopper, Globe, Camera, Leaf, ShieldAlert,
-  AlertTriangle, Wand2, ChevronLeft, ChevronRight, Compass
+  AlertTriangle, Wand2, ChevronLeft, ChevronRight, Compass, Settings
 } from "lucide-react";
 import { useState } from "react";
 
@@ -106,8 +106,14 @@ export default function DesktopSidebar({
         })}
       </div>
 
-      {/* Bottom actions */}
       <div className="p-3 border-t border-border space-y-1">
+        <button
+          onClick={() => onFeatureClick("settings")}
+          className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition`}
+        >
+          <Settings className="w-4 h-4 shrink-0" />
+          {!collapsed && <span className="text-[11px] font-medium">Settings</span>}
+        </button>
         <button
           onClick={onSafetyClick}
           className={`w-full flex items-center ${collapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-xl text-muted-foreground hover:bg-ts-saffron/10 hover:text-ts-saffron transition`}

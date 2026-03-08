@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Eye, Trash2, LogOut, MapPin, Compass, Star, BookOpen } from "lucide-react";
+import { Eye, Trash2, LogOut, MapPin, Compass, Star, BookOpen, Settings } from "lucide-react";
 import type { UserData, SavedTrip } from "@/lib/tripData";
 
 interface ProfileViewProps {
@@ -9,9 +9,10 @@ interface ProfileViewProps {
   onDeleteTrip: (id: number) => void;
   onLogout: () => void;
   onGenerateStory: (trip: SavedTrip) => void;
+  onSettings?: () => void;
 }
 
-export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip, onLogout, onGenerateStory }: ProfileViewProps) {
+export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip, onLogout, onGenerateStory, onSettings }: ProfileViewProps) {
   return (
     <div className="h-full flex flex-col">
       {/* Profile Header */}
@@ -98,7 +99,15 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
         )}
       </div>
 
-      <div className="p-5 pt-2 shrink-0">
+      <div className="p-5 pt-2 shrink-0 space-y-2">
+        {onSettings && (
+          <button
+            onClick={onSettings}
+            className="w-full bg-primary/10 text-primary font-bold py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 transition active:scale-95"
+          >
+            <Settings className="w-4 h-4" /> Settings
+          </button>
+        )}
         <button
           onClick={onLogout}
           className="w-full bg-destructive/10 text-destructive font-bold py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 transition active:scale-95"

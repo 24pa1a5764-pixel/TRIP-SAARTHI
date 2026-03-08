@@ -37,6 +37,7 @@ import TransportFinderView from "@/components/trip/TransportFinderView";
 import FestivalEventsView from "@/components/trip/FestivalEventsView";
 import LanguageAssistantView from "@/components/trip/LanguageAssistantView";
 import PhotoSpotFinderView from "@/components/trip/PhotoSpotFinderView";
+import SettingsView from "@/components/trip/SettingsView";
 import {
   generateMockItinerary,
   generateMockPackingList,
@@ -316,6 +317,9 @@ export default function Index() {
                 {subView === "photo_spots" && (
                   <PhotoSpotFinderView onBack={() => setSubView("home")} />
                 )}
+                {subView === "settings" && (
+                  <SettingsView onBack={() => setSubView("home")} />
+                )}
               </>
             )}
 
@@ -341,6 +345,7 @@ export default function Index() {
                 onDeleteTrip={deleteSavedTrip}
                 onLogout={signOut}
                 onGenerateStory={(trip) => { setSelectedTrip(trip); setActiveTab("home"); setSubView("story"); }}
+                onSettings={() => { setActiveTab("home"); setSubView("settings"); }}
               />
             )}
           </div>
