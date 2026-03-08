@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import SplashScreen from "@/components/trip/SplashScreen";
 import AuthScreen from "@/components/trip/AuthScreen";
+import OnboardingScreen from "@/components/trip/OnboardingScreen";
 import BottomNav from "@/components/trip/BottomNav";
 import HomeOverlay from "@/components/trip/HomeOverlay";
 import GlobalSearch from "@/components/trip/GlobalSearch";
@@ -38,11 +41,12 @@ import {
 } from "@/lib/tripData";
 
 export default function Index() {
-  const [appState, setAppState] = useState<"splash" | "auth" | "main">("splash");
+  const { user, profile, loading, needsOnboarding, signOut, updateProfile } = useAuth();
+
+  const [showSplash, setShowSplash] = useState(true);
   const [activeTab, setActiveTab] = useState("home");
   const [subView, setSubView] = useState("home");
 
-  const [user, setUser] = useState<UserData | null>(null);
   const [tripSettings, setTripSettings] = useState<TripSettings>({ start: "", end: "", type: "Solo", budget: "Standard" });
   const [cart, setCart] = useState<Place[]>([]);
   const [currentCategory, setCurrentCategory] = useState("heritage");
@@ -55,20 +59,42 @@ export default function Index() {
   const [selectedTrip, setSelectedTrip] = useState<SavedTrip | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setAppState("auth"), 2500);
-    const loaded = JSON.parse(localStorage.getItem("tripsaarthi_trips") || "[]");
-    setSavedTrips(loaded);
+    const timer = setTimeout(() => setShowSplash(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
-  const handleLogin = (type: string) => {
-    if (type === "Google") {
-      setUser({ name: "Aditya Sharma", email: "aditya.sharma@gmail.com", avatar: "https://ui-avatars.com/api/?name=Aditya+Sharma&background=2563eb&color=fff" });
-    } else {
-      setUser({ name: "Guest Explorer", email: "guest@tripsaarthi.com", avatar: "https://ui-avatars.com/api/?name=Guest+User&background=2563eb&color=fff" });
+  // Load saved trips from DB
+  const loadTrips = useCallback(async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from("saved_trips")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+    if (data) {
+      setSavedTrips(
+        data.map((t) => ({
+          id: parseInt(t.id.replace(/-/g, "").slice(0, 8), 16), // numeric id for compat
+          date: new Date(t.created_at).toLocaleDateString(),
+          places: t.places,
+          data: t.trip_data as unknown as ItineraryData,
+          dbId: t.id,
+        }))
+      );
     }
-    setAppState("main");
-  };
+  }, [user]);
+
+  useEffect(() => {
+    loadTrips();
+  }, [loadTrips]);
+
+  const userData: UserData | null = user
+    ? {
+        name: profile?.full_name || user.user_metadata?.full_name || user.email?.split("@")[0] || "Traveler",
+        email: user.email || "",
+        avatar: profile?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(profile?.full_name || "User")}&background=2563eb&color=fff`,
+      }
+    : null;
 
   const toggleCartItem = (item: Place) => {
     setCart((prev) => {
@@ -97,25 +123,52 @@ export default function Index() {
     setSubView("itinerary_result");
   };
 
-  const saveTrip = () => {
-    if (!itineraryResult || itineraryResult.isPacking) return;
-    const newTrip: SavedTrip = { id: Date.now(), date: new Date().toLocaleDateString(), places: cart.map((c) => c.name), data: itineraryResult };
-    const updated = [newTrip, ...savedTrips];
-    setSavedTrips(updated);
-    localStorage.setItem("tripsaarthi_trips", JSON.stringify(updated));
-    alert("Trip Saved to Profile! 🎉");
+  const saveTrip = async () => {
+    if (!itineraryResult || itineraryResult.isPacking || !user) return;
+    
+    const { error } = await supabase.from("saved_trips").insert([{
+      user_id: user.id,
+      title: itineraryResult.title,
+      places: cart.map((c) => c.name),
+      trip_data: JSON.parse(JSON.stringify(itineraryResult)),
+    }]);
+
+    if (error) {
+      alert("Failed to save trip: " + error.message);
+      return;
+    }
+    
+    alert("Trip Saved! 🎉");
+    await loadTrips();
     setSubView("home");
     setCart([]);
   };
 
-  const deleteSavedTrip = (id: number) => {
-    const updated = savedTrips.filter((t) => t.id !== id);
-    setSavedTrips(updated);
-    localStorage.setItem("tripsaarthi_trips", JSON.stringify(updated));
+  const deleteSavedTrip = async (id: number) => {
+    const trip = savedTrips.find((t) => t.id === id);
+    if (!trip) return;
+    const dbId = (trip as any).dbId;
+    if (dbId) {
+      await supabase.from("saved_trips").delete().eq("id", dbId);
+    }
+    await loadTrips();
   };
 
-  if (appState === "splash") return <SplashScreen />;
-  if (appState === "auth") return <AuthScreen onLogin={handleLogin} />;
+  const handleOnboarding = async (data: { full_name: string; phone: string; address: string; city: string; latitude?: number; longitude?: number }) => {
+    await updateProfile(data);
+  };
+
+  if (showSplash) return <SplashScreen />;
+  if (loading) return <SplashScreen />;
+  if (!user) return <AuthScreen />;
+  if (needsOnboarding) {
+    return (
+      <OnboardingScreen
+        initialName={profile?.full_name || user.user_metadata?.full_name || ""}
+        onComplete={handleOnboarding}
+      />
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-foreground/5 flex items-center justify-center">
@@ -124,9 +177,9 @@ export default function Index() {
           <div className="relative z-10 h-full">
             {activeTab === "home" && (
               <>
-                {subView === "home" && user && (
+                {subView === "home" && userData && (
                   <HomeOverlay
-                    user={user}
+                    user={userData}
                     cartCount={cart.length}
                     onSearch={() => setSubView("search")}
                     onStartJourney={() => setSubView("planner")}
@@ -224,13 +277,13 @@ export default function Index() {
 
             {activeTab === "chat" && <ChatView messages={chatMessages} setMessages={setChatMessages} />}
 
-            {activeTab === "profile" && user && (
+            {activeTab === "profile" && userData && (
               <ProfileView
-                user={user}
+                user={userData}
                 savedTrips={savedTrips}
                 onViewTrip={(trip) => { setItineraryResult(trip.data); setActiveTab("home"); setSubView("itinerary_result"); }}
                 onDeleteTrip={deleteSavedTrip}
-                onLogout={() => setAppState("auth")}
+                onLogout={signOut}
                 onGenerateStory={(trip) => { setSelectedTrip(trip); setActiveTab("home"); setSubView("story"); }}
               />
             )}
