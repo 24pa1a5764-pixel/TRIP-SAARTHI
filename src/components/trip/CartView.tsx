@@ -28,9 +28,9 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
           <ArrowLeft className="w-5 h-5 text-foreground" />
         </button>
         <div className="flex-1">
-          <h2 className="text-lg font-display font-bold text-foreground">Trip Chart</h2>
+          <h2 className="text-lg font-display font-bold text-foreground">{t("trip_chart")}</h2>
           <p className="text-[10px] text-muted-foreground">
-            {cart.length} places • {uniqueLocations.length} cities
+            {cart.length} {t("places")} • {uniqueLocations.length} {t("cities")}
           </p>
         </div>
       </div>
