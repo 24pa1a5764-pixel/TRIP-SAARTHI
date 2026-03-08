@@ -81,13 +81,13 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
                       onClick={() => onViewTrip(trip)}
                       className="flex-1 bg-primary/10 text-primary text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 ts-touch-btn"
                     >
-                      <Eye className="w-3.5 h-3.5" /> View
+                    <Eye className="w-3.5 h-3.5" /> {t("view")}
                     </button>
                     <button
                       onClick={() => onGenerateStory(trip)}
                       className="flex-1 bg-ts-saffron/10 text-ts-saffron text-xs font-bold py-2.5 rounded-xl flex items-center justify-center gap-1.5 ts-touch-btn"
                     >
-                      <BookOpen className="w-3.5 h-3.5" /> Story
+                      <BookOpen className="w-3.5 h-3.5" /> {t("story")}
                     </button>
                     <button
                       onClick={() => onDeleteTrip(trip.id)}
