@@ -39,6 +39,18 @@ import LanguageAssistantView from "@/components/trip/LanguageAssistantView";
 import PhotoSpotFinderView from "@/components/trip/PhotoSpotFinderView";
 import SettingsView from "@/components/trip/SettingsView";
 import SwipeableTabs from "@/components/trip/SwipeableTabs";
+import ScamAlertView from "@/components/trip/ScamAlertView";
+import TimeOptimizerView from "@/components/trip/TimeOptimizerView";
+import SoloSafetyView from "@/components/trip/SoloSafetyView";
+import PersonalityAnalyzerView from "@/components/trip/PersonalityAnalyzerView";
+import SkillExperienceView from "@/components/trip/SkillExperienceView";
+import AirQualityView from "@/components/trip/AirQualityView";
+import LostItemFinderView from "@/components/trip/LostItemFinderView";
+import RestStopFinderView from "@/components/trip/RestStopFinderView";
+import TravelRiskView from "@/components/trip/TravelRiskView";
+import DigitalPassportView from "@/components/trip/DigitalPassportView";
+import SunriseSunsetView from "@/components/trip/SunriseSunsetView";
+import TravelChallengeView from "@/components/trip/TravelChallengeView";
 import {
   generateMockItinerary,
   generateMockPackingList,
@@ -235,6 +247,18 @@ export default function Index() {
                     onFestivalsClick={() => setSubView("festivals")}
                     onLanguageClick={() => setSubView("language")}
                     onPhotoSpotsClick={() => setSubView("photo_spots")}
+                    onScamAlertClick={() => setSubView("scam_alert")}
+                    onTimeOptimizerClick={() => setSubView("time_optimizer")}
+                    onSoloSafetyClick={() => setSubView("solo_safety")}
+                    onPersonalityClick={() => setSubView("personality")}
+                    onSkillExperienceClick={() => setSubView("skill_experience")}
+                    onAirQualityClick={() => setSubView("air_quality")}
+                    onLostItemClick={() => setSubView("lost_item")}
+                    onRestStopClick={() => setSubView("rest_stop")}
+                    onTravelRiskClick={() => setSubView("travel_risk")}
+                    onDigitalPassportClick={() => setSubView("digital_passport")}
+                    onSunriseSunsetClick={() => setSubView("sunrise_sunset")}
+                    onTravelChallengeClick={() => setSubView("travel_challenge")}
                   />
                 )}
                 {subView === "search" && (
@@ -326,6 +350,42 @@ export default function Index() {
                 )}
                 {subView === "settings" && (
                   <SettingsView onBack={() => setSubView("home")} />
+                )}
+                {subView === "scam_alert" && (
+                  <ScamAlertView onBack={() => setSubView("home")} />
+                )}
+                {subView === "time_optimizer" && (
+                  <TimeOptimizerView onBack={() => setSubView("home")} />
+                )}
+                {subView === "solo_safety" && (
+                  <SoloSafetyView onBack={() => setSubView("home")} />
+                )}
+                {subView === "personality" && (
+                  <PersonalityAnalyzerView onBack={() => setSubView("home")} />
+                )}
+                {subView === "skill_experience" && (
+                  <SkillExperienceView onBack={() => setSubView("home")} />
+                )}
+                {subView === "air_quality" && (
+                  <AirQualityView onBack={() => setSubView("home")} />
+                )}
+                {subView === "lost_item" && (
+                  <LostItemFinderView onBack={() => setSubView("home")} />
+                )}
+                {subView === "rest_stop" && (
+                  <RestStopFinderView onBack={() => setSubView("home")} />
+                )}
+                {subView === "travel_risk" && (
+                  <TravelRiskView onBack={() => setSubView("home")} />
+                )}
+                {subView === "digital_passport" && (
+                  <DigitalPassportView onBack={() => setSubView("home")} savedTripsCount={savedTrips.length} />
+                )}
+                {subView === "sunrise_sunset" && (
+                  <SunriseSunsetView onBack={() => setSubView("home")} />
+                )}
+                {subView === "travel_challenge" && (
+                  <TravelChallengeView onBack={() => setSubView("home")} />
                 )}
               </>
             )}
