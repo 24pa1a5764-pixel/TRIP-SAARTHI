@@ -126,7 +126,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
 
         {/* Notifications */}
         <section>
-          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Notifications</h3>
+          <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">{t("notifications")}</h3>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
