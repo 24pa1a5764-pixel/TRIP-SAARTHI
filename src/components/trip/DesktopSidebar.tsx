@@ -43,6 +43,7 @@ export default function DesktopSidebar({
   activeTab, setActiveTab, onFeatureClick, onSafetyClick, onEmergencyClick, cartCount
 }: DesktopSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <motion.div
