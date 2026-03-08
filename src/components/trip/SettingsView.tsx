@@ -185,7 +185,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
                     <div className="w-9 h-9 rounded-xl bg-ts-purple/10 flex items-center justify-center">
                       <Users className="w-4 h-4 text-ts-purple" />
                     </div>
-                    <p className="text-sm text-foreground">Community Updates</p>
+                    <p className="text-sm text-foreground">{t("community_updates")}</p>
                   </div>
                   <Switch
                     checked={communityUpdates}
