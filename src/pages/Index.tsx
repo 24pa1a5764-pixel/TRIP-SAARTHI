@@ -345,6 +345,7 @@ export default function Index() {
                 onDeleteTrip={deleteSavedTrip}
                 onLogout={signOut}
                 onGenerateStory={(trip) => { setSelectedTrip(trip); setActiveTab("home"); setSubView("story"); }}
+                onSettings={() => { setActiveTab("home"); setSubView("settings"); }}
               />
             )}
           </div>
