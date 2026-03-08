@@ -22,7 +22,7 @@ export const MOCK_DATA: Record<string, Place[]> = {
   ],
   nature: [
     { name: "Lodhi Garden", loc: "Delhi", img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=80", lat: 28.5933, lng: 77.2195, rating: 4.3, duration: "1-2 hrs", price: "Free", description: "Historic park with tombs from the Lodhi dynasty" },
-    { name: "Pangong Lake", loc: "Ladakh", img: "https://images.unsplash.com/photo-1626083558364-783a45c61ea0?w=400&q=80", lat: 33.7595, lng: 78.6674, rating: 4.8, duration: "Half day", price: "Free", description: "Highest saltwater lake, famous for changing colors" },
+    { name: "Pangong Lake", loc: "Ladakh", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80", lat: 33.7595, lng: 78.6674, rating: 4.8, duration: "Half day", price: "Free", description: "Highest saltwater lake, famous for changing colors" },
     { name: "Alleppey Backwaters", loc: "Kerala", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&q=80", lat: 9.4981, lng: 76.3388, rating: 4.7, duration: "Full day", price: "₹1500+", description: "Serene houseboat experience through palm-lined canals" },
     { name: "Valley of Flowers", loc: "Uttarakhand", img: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=400&q=80", lat: 30.7280, lng: 79.6050, rating: 4.8, duration: "Full day", price: "₹150", description: "UNESCO site with 600+ species of wildflowers" },
     { name: "Dudhsagar Falls", loc: "Goa", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&q=80", lat: 15.3144, lng: 74.3143, rating: 4.5, duration: "Half day", price: "₹400", description: "Spectacular four-tiered waterfall on the Mandovi river" },
