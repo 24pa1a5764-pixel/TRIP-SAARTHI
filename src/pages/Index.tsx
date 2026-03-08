@@ -178,8 +178,8 @@ export default function Index() {
   }
 
   return (
-    <div className="fixed inset-0 bg-foreground/5 flex items-center justify-center">
-      <div className="w-full max-w-md h-full bg-background flex flex-col relative overflow-hidden shadow-2xl">
+    <div className="fixed inset-0 bg-background flex items-center justify-center">
+      <div className="w-full h-full bg-background flex flex-col relative overflow-hidden md:max-w-5xl md:shadow-2xl md:rounded-none">
         <div className="flex-1 overflow-hidden relative">
           <div className="relative z-10 h-full">
             {activeTab === "home" && (
