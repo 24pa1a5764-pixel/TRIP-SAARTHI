@@ -18,16 +18,17 @@ const tabs = [
 ];
 
 export default function BottomNav({ active, setActive, cartCount = 0 }: BottomNavProps) {
+  const { t } = useTranslation();
   return (
     <div className="h-[72px] bg-card/95 backdrop-blur-xl border-t border-border flex items-center justify-around px-1 shrink-0 relative">
-      {tabs.map((t) => {
-        const Icon = t.icon;
-        const isActive = active === t.id;
+      {tabs.map((tab) => {
+        const Icon = tab.icon;
+        const isActive = active === tab.id;
         return (
           <button
-            key={t.id}
-            onClick={() => setActive(t.id)}
-            className="flex flex-col items-center justify-center flex-1 h-full transition duration-200 relative"
+            key={tab.id}
+            onClick={() => setActive(tab.id)}
+            className="flex flex-col items-center justify-center flex-1 h-full transition duration-200 relative ts-no-min-touch"
           >
             {isActive && (
               <motion.div
@@ -40,7 +41,7 @@ export default function BottomNav({ active, setActive, cartCount = 0 }: BottomNa
               <Icon className={`w-5 h-5 mb-1 transition ${isActive ? "text-primary scale-110" : "text-muted-foreground"}`} />
             </div>
             <span className={`text-[9px] font-semibold ${isActive ? "text-primary" : "text-muted-foreground"}`}>
-              {t.label}
+              {t(tab.labelKey)}
             </span>
           </button>
         );
