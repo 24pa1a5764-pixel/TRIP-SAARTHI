@@ -25,7 +25,7 @@ export default function SettingsView({ onBack }: SettingsViewProps) {
           <button onClick={() => setShowLangPicker(false)} className="p-2 -ml-2 rounded-xl hover:bg-muted transition">
             <ArrowLeft className="w-5 h-5 text-foreground" />
           </button>
-          <h2 className="text-base font-display font-bold text-foreground">Select Language</h2>
+          <h2 className="text-base font-display font-bold text-foreground">{t("select_language")}</h2>
         </div>
         <div className="flex-1 overflow-y-auto ts-scrollbar-hide px-5 py-3">
           <div className="space-y-1">
