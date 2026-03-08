@@ -247,6 +247,18 @@ export default function Index() {
                     onFestivalsClick={() => setSubView("festivals")}
                     onLanguageClick={() => setSubView("language")}
                     onPhotoSpotsClick={() => setSubView("photo_spots")}
+                    onScamAlertClick={() => setSubView("scam_alert")}
+                    onTimeOptimizerClick={() => setSubView("time_optimizer")}
+                    onSoloSafetyClick={() => setSubView("solo_safety")}
+                    onPersonalityClick={() => setSubView("personality")}
+                    onSkillExperienceClick={() => setSubView("skill_experience")}
+                    onAirQualityClick={() => setSubView("air_quality")}
+                    onLostItemClick={() => setSubView("lost_item")}
+                    onRestStopClick={() => setSubView("rest_stop")}
+                    onTravelRiskClick={() => setSubView("travel_risk")}
+                    onDigitalPassportClick={() => setSubView("digital_passport")}
+                    onSunriseSunsetClick={() => setSubView("sunrise_sunset")}
+                    onTravelChallengeClick={() => setSubView("travel_challenge")}
                   />
                 )}
                 {subView === "search" && (
