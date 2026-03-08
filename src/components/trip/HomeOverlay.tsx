@@ -169,11 +169,11 @@ export default function HomeOverlay({
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-ts-saffron/10 rounded-xl p-3 text-center">
                   <p className="text-lg font-bold text-ts-saffron">{cartCount}</p>
-                  <p className="text-[9px] text-muted-foreground">In Cart</p>
+                  <p className="text-[9px] text-muted-foreground">{t("in_cart")}</p>
                 </div>
                 <div className="bg-ts-sky/10 rounded-xl p-3 text-center">
                   <p className="text-lg font-bold text-ts-sky">10+</p>
-                  <p className="text-[9px] text-muted-foreground">Features</p>
+                  <p className="text-[9px] text-muted-foreground">{t("features")}</p>
                 </div>
               </div>
             </div>
