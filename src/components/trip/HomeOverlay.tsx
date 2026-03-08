@@ -233,7 +233,8 @@ export default function HomeOverlay({
         </div>
       </motion.div>
 
-      {cartCount > 0 && <div className="h-20" />}
+      {/* Bottom spacer for nav bar */}
+      <div className="h-24" />
 
       {cartCount > 0 && (
         <motion.div
