@@ -130,7 +130,7 @@ export default function Index() {
       user_id: user.id,
       title: itineraryResult.title,
       places: cart.map((c) => c.name),
-      trip_data: itineraryResult as unknown as Record<string, unknown>,
+      trip_data: JSON.parse(JSON.stringify(itineraryResult)),
     }]);
 
     if (error) {
