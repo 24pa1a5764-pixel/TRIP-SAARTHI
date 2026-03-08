@@ -44,6 +44,8 @@ const trending: Place[] = [
   MOCK_DATA.heritage[0],
   MOCK_DATA.nature[1],
   MOCK_DATA.adventure?.[0],
+  MOCK_DATA.heritage[2],
+  MOCK_DATA.nature[2],
 ].filter(Boolean) as Place[];
 
 export default function HomeOverlay({
@@ -227,14 +229,16 @@ export default function HomeOverlay({
             <TrendingUp className="w-4 h-4 text-ts-saffron" /> Trending Now
           </h3>
         </div>
-        <div className="flex gap-3 overflow-x-auto ts-scrollbar-hide pb-1">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {trending.map((place) => (
             <button
               key={place.name}
               onClick={() => onCategoryClick(place.category || "heritage")}
-              className="shrink-0 w-[160px] bg-card rounded-2xl ts-shadow-card border border-border overflow-hidden active:scale-[0.98] transition text-left"
+              className="bg-card rounded-2xl ts-shadow-card border border-border overflow-hidden active:scale-[0.98] transition text-left"
             >
-              <img src={place.img} alt={place.name} className="w-full h-24 object-cover" />
+              <div className="w-full h-28 md:h-32 bg-muted relative overflow-hidden">
+                <img src={place.img} alt={place.name} loading="lazy" className="w-full h-full object-cover" />
+              </div>
               <div className="p-3">
                 <p className="text-xs font-bold text-foreground truncate">{place.name}</p>
                 <p className="text-[10px] text-muted-foreground">{place.loc}</p>
