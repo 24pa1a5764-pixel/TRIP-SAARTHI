@@ -59,10 +59,8 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
             <div className="w-20 h-20 rounded-3xl bg-muted flex items-center justify-center mb-4">
               <MapPin className="w-8 h-8 text-muted-foreground/30" />
             </div>
-            <p className="text-sm font-bold text-foreground mb-1">No places added yet</p>
-            <p className="text-xs text-muted-foreground mb-4">
-              Go back and explore categories to add destinations
-            </p>
+            <p className="text-sm font-bold text-foreground mb-1">{t("empty_cart")}</p>
+            <p className="text-xs text-muted-foreground mb-4">{t("empty_cart_desc")}</p>
             <button onClick={onBack} className="text-xs font-bold text-primary bg-primary/10 px-4 py-2 rounded-xl">
               ← Explore Places
             </button>
