@@ -15,6 +15,17 @@ import ChatView from "@/components/trip/ChatView";
 import ProfileView from "@/components/trip/ProfileView";
 import SafetyModal from "@/components/trip/SafetyModal";
 import DiscoverView from "@/components/trip/DiscoverView";
+import CrowdDensityView from "@/components/trip/CrowdDensityView";
+import HiddenGemsView from "@/components/trip/HiddenGemsView";
+import CulturalEtiquetteView from "@/components/trip/CulturalEtiquetteView";
+import MoodRecommendations from "@/components/trip/MoodRecommendations";
+import EmergencyButton from "@/components/trip/EmergencyButton";
+import ARHistoryView from "@/components/trip/ARHistoryView";
+import BudgetOptimizerView from "@/components/trip/BudgetOptimizerView";
+import CarbonFootprintView from "@/components/trip/CarbonFootprintView";
+import StoryGeneratorView from "@/components/trip/StoryGeneratorView";
+import CommunityChat from "@/components/trip/CommunityChat";
+import SafetyRouteView from "@/components/trip/SafetyRouteView";
 import {
   generateMockItinerary,
   generateMockPackingList,
@@ -38,7 +49,10 @@ export default function Index() {
   const [savedTrips, setSavedTrips] = useState<SavedTrip[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [safetyModalOpen, setSafetyModalOpen] = useState(false);
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
   const [itineraryResult, setItineraryResult] = useState<ItineraryData | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState("");
+  const [selectedTrip, setSelectedTrip] = useState<SavedTrip | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setAppState("auth"), 2500);
@@ -68,10 +82,7 @@ export default function Index() {
     if (cart.length === 0) return alert("Please add places to your trip chart first!");
     setItineraryResult(null);
     setSubView("itinerary_loading");
-
-    // Simulate AI loading
     await new Promise((r) => setTimeout(r, 1500 + Math.random() * 1000));
-
     const result = generateMockItinerary(cart, tripSettings.type, tripSettings.budget, vibe);
     setItineraryResult(result);
     setSubView("itinerary_result");
@@ -80,9 +91,7 @@ export default function Index() {
   const generatePacking = async () => {
     if (cart.length === 0) return;
     setSubView("itinerary_loading");
-
     await new Promise((r) => setTimeout(r, 1200));
-
     const result = generateMockPackingList(cart, tripSettings.type);
     setItineraryResult(result);
     setSubView("itinerary_result");
@@ -124,6 +133,12 @@ export default function Index() {
                     onCategoryClick={(cat) => { setCurrentCategory(cat); setSubView("recommendations"); }}
                     onSafetyClick={() => setSafetyModalOpen(true)}
                     onCartClick={() => setSubView("cart")}
+                    onMoodClick={() => setSubView("mood")}
+                    onHiddenGemsClick={() => setSubView("hidden_gems")}
+                    onCommunityClick={() => { setActiveTab("community"); }}
+                    onEmergencyClick={() => setEmergencyOpen(true)}
+                    onBudgetClick={() => setSubView("budget")}
+                    onCarbonClick={() => setSubView("carbon")}
                   />
                 )}
                 {subView === "search" && (
@@ -136,14 +151,61 @@ export default function Index() {
                   <ExploreHub onBack={() => setSubView("planner")} onSelectCategory={(cat) => { setCurrentCategory(cat); setSubView("recommendations"); }} />
                 )}
                 {subView === "recommendations" && (
-                  <RecommendationsView category={currentCategory} cart={cart} toggleCart={toggleCartItem} onBack={() => setSubView("explore")} onViewCart={() => setSubView("cart")} />
+                  <RecommendationsView
+                    category={currentCategory}
+                    cart={cart}
+                    toggleCart={toggleCartItem}
+                    onBack={() => setSubView("explore")}
+                    onViewCart={() => setSubView("cart")}
+                    onCrowdDensity={(name) => { setSelectedPlace(name); setSubView("crowd_density"); }}
+                    onEtiquette={(name) => { setSelectedPlace(name); setSubView("etiquette"); }}
+                    onARHistory={(name) => { setSelectedPlace(name); setSubView("ar_history"); }}
+                  />
                 )}
                 {subView === "cart" && (
-                  <CartView cart={cart} toggleCart={toggleCartItem} onBack={() => setSubView("home")} onGenerateItinerary={() => generateItinerary()} onGeneratePacking={generatePacking} />
+                  <CartView
+                    cart={cart}
+                    toggleCart={toggleCartItem}
+                    onBack={() => setSubView("home")}
+                    onGenerateItinerary={() => generateItinerary()}
+                    onGeneratePacking={generatePacking}
+                    onBudgetOptimizer={() => setSubView("budget")}
+                    onCarbonFootprint={() => setSubView("carbon")}
+                  />
                 )}
                 {subView === "itinerary_loading" && <LoadingOverlay text="Building your perfect trip..." />}
                 {subView === "itinerary_result" && (
                   <ItineraryResult data={itineraryResult} onClose={() => setSubView("cart")} onSave={saveTrip} onRegenerate={generateItinerary} />
+                )}
+                {subView === "mood" && (
+                  <MoodRecommendations
+                    onBack={() => setSubView("home")}
+                    onSelectMood={(cats) => { setCurrentCategory(cats[0]); setSubView("recommendations"); }}
+                  />
+                )}
+                {subView === "hidden_gems" && (
+                  <HiddenGemsView onBack={() => setSubView("home")} onAddToCart={toggleCartItem} cart={cart} />
+                )}
+                {subView === "crowd_density" && (
+                  <CrowdDensityView placeName={selectedPlace} onBack={() => setSubView("recommendations")} />
+                )}
+                {subView === "etiquette" && (
+                  <CulturalEtiquetteView placeName={selectedPlace} onBack={() => setSubView("recommendations")} />
+                )}
+                {subView === "ar_history" && (
+                  <ARHistoryView placeName={selectedPlace} onBack={() => setSubView("recommendations")} />
+                )}
+                {subView === "budget" && (
+                  <BudgetOptimizerView budget={tripSettings.budget} onBack={() => setSubView("cart")} />
+                )}
+                {subView === "carbon" && (
+                  <CarbonFootprintView cart={cart} onBack={() => setSubView("cart")} />
+                )}
+                {subView === "safety_route" && (
+                  <SafetyRouteView city="Delhi" onBack={() => setSubView("home")} />
+                )}
+                {subView === "story" && selectedTrip && (
+                  <StoryGeneratorView trip={selectedTrip} onBack={() => { setSubView("home"); setActiveTab("profile"); }} />
                 )}
               </>
             )}
@@ -156,6 +218,10 @@ export default function Index() {
               />
             )}
 
+            {activeTab === "community" && (
+              <CommunityChat onBack={() => { setActiveTab("home"); setSubView("home"); }} />
+            )}
+
             {activeTab === "chat" && <ChatView messages={chatMessages} setMessages={setChatMessages} />}
 
             {activeTab === "profile" && user && (
@@ -165,6 +231,7 @@ export default function Index() {
                 onViewTrip={(trip) => { setItineraryResult(trip.data); setActiveTab("home"); setSubView("itinerary_result"); }}
                 onDeleteTrip={deleteSavedTrip}
                 onLogout={() => setAppState("auth")}
+                onGenerateStory={(trip) => { setSelectedTrip(trip); setActiveTab("home"); setSubView("story"); }}
               />
             )}
           </div>
@@ -173,6 +240,8 @@ export default function Index() {
         <AnimatePresence>
           {safetyModalOpen && <SafetyModal onClose={() => setSafetyModalOpen(false)} />}
         </AnimatePresence>
+
+        <EmergencyButton isOpen={emergencyOpen} onClose={() => setEmergencyOpen(false)} />
 
         <BottomNav active={activeTab} setActive={(tab) => { setActiveTab(tab); if (tab === "home") setSubView("home"); }} cartCount={cart.length} />
       </div>
