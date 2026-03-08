@@ -142,7 +142,7 @@ export default function HomeOverlay({
           {/* Categories */}
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }} className="px-5 md:px-0 mb-4">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-display font-bold text-foreground">Explore Categories</h3>
+              <h3 className="text-sm font-display font-bold text-foreground">{t("explore_categories")}</h3>
               <span className="text-[10px] text-muted-foreground">{Object.keys(MOCK_DATA).length} types</span>
             </div>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
