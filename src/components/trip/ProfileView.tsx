@@ -30,9 +30,9 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
         </div>
         <div className="relative z-10 flex gap-3 mt-4">
           {[
-            { label: "Trips", value: savedTrips.length },
-            { label: "Places", value: savedTrips.reduce((a, t) => a + t.places.length, 0) },
-            { label: "Cities", value: [...new Set(savedTrips.flatMap(t => t.places))].length },
+            { label: t("trips"), value: savedTrips.length },
+            { label: t("places_stat"), value: savedTrips.reduce((a, t2) => a + t2.places.length, 0) },
+            { label: t("cities_stat"), value: [...new Set(savedTrips.flatMap(t2 => t2.places))].length },
           ].map(stat => (
             <div key={stat.label} className="flex-1 bg-primary-foreground/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-primary-foreground/10">
               <p className="text-lg font-display font-bold text-primary-foreground">{stat.value}</p>
