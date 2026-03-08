@@ -130,7 +130,7 @@ export default function CartView({ cart, toggleCart, onBack, onGenerateItinerary
           disabled={cart.length === 0}
           className="w-full ts-gradient-hero text-primary-foreground font-bold py-4 rounded-2xl text-sm ts-shadow-elevated flex items-center justify-center gap-2 transition active:scale-[0.98] disabled:opacity-40"
         >
-          <Wand2 className="w-4 h-4" /> Build AI Itinerary
+          <Wand2 className="w-4 h-4" /> {t("generate_itinerary")}
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

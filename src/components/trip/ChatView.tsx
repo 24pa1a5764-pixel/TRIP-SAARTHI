@@ -143,7 +143,7 @@ export default function ChatView({ messages, setMessages }: ChatViewProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          placeholder="Ask Saarthi anything..."
+          placeholder={t("ask_anything")}
           className="flex-1 bg-muted border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-primary transition text-foreground placeholder:text-muted-foreground"
         />
         <button

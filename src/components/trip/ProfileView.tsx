@@ -116,7 +116,7 @@ export default function ProfileView({ user, savedTrips, onViewTrip, onDeleteTrip
           onClick={onLogout}
           className="w-full bg-destructive/10 text-destructive font-bold py-3.5 rounded-2xl text-sm flex items-center justify-center gap-2 transition active:scale-95"
         >
-          <LogOut className="w-4 h-4" /> Sign Out
+          <LogOut className="w-4 h-4" /> {t("sign_out")}
         </button>
       </div>
     </div>
