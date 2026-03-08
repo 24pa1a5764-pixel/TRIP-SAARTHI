@@ -199,6 +199,13 @@ export default function Index() {
                     onEmergencyClick={() => setEmergencyOpen(true)}
                     onBudgetClick={() => setSubView("budget")}
                     onCarbonClick={() => setSubView("carbon")}
+                    onFoodFinderClick={() => setSubView("food_finder")}
+                    onWeatherClick={() => setSubView("weather")}
+                    onBadgesClick={() => setSubView("badges")}
+                    onTransportClick={() => setSubView("transport")}
+                    onFestivalsClick={() => setSubView("festivals")}
+                    onLanguageClick={() => setSubView("language")}
+                    onPhotoSpotsClick={() => setSubView("photo_spots")}
                   />
                 )}
                 {subView === "search" && (
