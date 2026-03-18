@@ -38,6 +38,19 @@ const features = [
   { id: "language", icon: Globe, labelKey: "feat_translator" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
   { id: "photo_spots", icon: Camera, labelKey: "feat_photo_spots" as TranslationKey, color: "text-ts-sky", bg: "bg-ts-sky/10" },
   { id: "carbon", icon: Leaf, labelKey: "feat_eco_track" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10" },
+  { id: "scam_alert", icon: AlertOctagon, labelKey: "feat_scam_alerts" as TranslationKey, color: "text-destructive", bg: "bg-destructive/10" },
+  { id: "time_optimizer", icon: Clock, labelKey: "feat_time_optimizer" as TranslationKey, color: "text-ts-purple", bg: "bg-ts-purple/10" },
+  { id: "solo_safety", icon: Compass, labelKey: "feat_solo_safety" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10" },
+  { id: "personality", icon: Brain, labelKey: "feat_personality" as TranslationKey, color: "text-ts-purple", bg: "bg-ts-purple/10" },
+  { id: "skill_experience", icon: Palette, labelKey: "feat_experiences" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
+  { id: "air_quality", icon: Wind, labelKey: "feat_air_quality" as TranslationKey, color: "text-ts-sky", bg: "bg-ts-sky/10" },
+  { id: "lost_item", icon: Luggage, labelKey: "feat_lost_found" as TranslationKey, color: "text-ts-rose", bg: "bg-ts-rose/10" },
+  { id: "rest_stop", icon: MapPin, labelKey: "feat_rest_stops" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10" },
+  { id: "travel_risk", icon: BarChart3, labelKey: "feat_risk_score" as TranslationKey, color: "text-ts-rose", bg: "bg-ts-rose/10" },
+  { id: "digital_passport", icon: Globe, labelKey: "feat_passport" as TranslationKey, color: "text-primary", bg: "bg-primary/10" },
+  { id: "sunrise_sunset", icon: Sunrise, labelKey: "feat_sunrise_set" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
+  { id: "travel_challenge", icon: Target, labelKey: "feat_challenges" as TranslationKey, color: "text-ts-rose", bg: "bg-ts-rose/10" },
+  { id: "voice_assistant", icon: Mic, labelKey: "feat_voice_guide" as TranslationKey, color: "text-primary", bg: "bg-primary/10" },
 ];
 
 export default function DesktopSidebar({
