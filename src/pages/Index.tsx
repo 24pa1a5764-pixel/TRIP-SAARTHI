@@ -52,6 +52,8 @@ import DigitalPassportView from "@/components/trip/DigitalPassportView";
 import SunriseSunsetView from "@/components/trip/SunriseSunsetView";
 import TravelChallengeView from "@/components/trip/TravelChallengeView";
 import VoiceAssistantView from "@/components/trip/VoiceAssistantView";
+import BudgetTrackerView from "@/components/trip/BudgetTrackerView";
+import FakeCallView from "@/components/trip/FakeCallView";
 import {
   generateMockItinerary,
   generateMockPackingList,
