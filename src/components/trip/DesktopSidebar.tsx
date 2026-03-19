@@ -4,7 +4,8 @@ import {
   Utensils, CloudSun, Palette, Gem, Medal, Bus,
   PartyPopper, Globe, Camera, Leaf, ShieldAlert,
   AlertTriangle, Wand2, ChevronLeft, ChevronRight, Compass, Settings,
-  AlertOctagon, Clock, Brain, Wind, Luggage, MapPin, BarChart3, Sunrise, Target, Mic
+  AlertOctagon, Clock, Brain, Wind, Luggage, MapPin, BarChart3, Sunrise, Target, Mic,
+  IndianRupee, Phone
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
