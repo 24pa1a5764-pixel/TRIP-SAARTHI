@@ -396,6 +396,12 @@ export default function Index() {
                 {subView === "voice_assistant" && (
                   <VoiceAssistantView onBack={() => setSubView("home")} />
                 )}
+                {subView === "budget_tracker" && (
+                  <BudgetTrackerView onBack={() => setSubView("home")} />
+                )}
+                {subView === "fake_call" && (
+                  <FakeCallView onBack={() => setSubView("home")} />
+                )}
               </>
             )}
 
