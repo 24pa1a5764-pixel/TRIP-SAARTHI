@@ -249,9 +249,14 @@ export default function HomeOverlay({
         </div>
       </div>
 
-      {/* Quick Features - mobile only horizontal scroll */}
-      <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.12 }} className="px-5 mb-4 md:hidden">
-        <div className="flex gap-2 overflow-x-auto ts-scrollbar-hide pb-1">
+      {/* Quick Features - horizontal scroll on mobile, grid on desktop */}
+      <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.12 }} className="px-5 mb-4">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-display font-bold text-foreground">{t("quick_tools")}</h3>
+          <span className="text-[10px] text-muted-foreground">{quickFeatures.length} tools</span>
+        </div>
+        {/* Mobile: horizontal scroll */}
+        <div className="flex gap-2 overflow-x-auto ts-scrollbar-hide pb-1 md:hidden">
           {quickFeatures.map((feat, i) => {
             const Icon = feat.icon;
             return (
@@ -259,6 +264,19 @@ export default function HomeOverlay({
                 onClick={featureClickMap[feat.key]} className="shrink-0 flex items-center gap-2 bg-card px-3.5 py-2.5 rounded-xl ts-shadow-card border border-border active:scale-95 transition">
                 <div className={`${feat.bg} p-1.5 rounded-lg`}><Icon className={`w-3.5 h-3.5 ${feat.color}`} /></div>
                 <span className="text-[10px] font-bold text-foreground whitespace-nowrap">{t(feat.labelKey)}</span>
+              </motion.button>
+            );
+          })}
+        </div>
+        {/* Desktop: wrapped grid */}
+        <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 gap-2">
+          {quickFeatures.map((feat, i) => {
+            const Icon = feat.icon;
+            return (
+              <motion.button key={feat.key} initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.15 + i * 0.02 }}
+                onClick={featureClickMap[feat.key]} className="flex items-center gap-2 bg-card px-3 py-2.5 rounded-xl ts-shadow-card border border-border hover:border-primary/20 active:scale-95 transition">
+                <div className={`${feat.bg} p-1.5 rounded-lg shrink-0`}><Icon className={`w-3.5 h-3.5 ${feat.color}`} /></div>
+                <span className="text-[10px] font-bold text-foreground whitespace-nowrap truncate">{t(feat.labelKey)}</span>
               </motion.button>
             );
           })}
