@@ -4,7 +4,8 @@ import {
   Utensils, CloudSun, Palette, Gem, Medal, Bus,
   PartyPopper, Globe, Camera, Leaf, ShieldAlert,
   AlertTriangle, Wand2, ChevronLeft, ChevronRight, Compass, Settings,
-  AlertOctagon, Clock, Brain, Wind, Luggage, MapPin, BarChart3, Sunrise, Target, Mic
+  AlertOctagon, Clock, Brain, Wind, Luggage, MapPin, BarChart3, Sunrise, Target, Mic,
+  IndianRupee, Phone
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -51,6 +52,8 @@ const features = [
   { id: "sunrise_sunset", icon: Sunrise, labelKey: "feat_sunrise_set" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10" },
   { id: "travel_challenge", icon: Target, labelKey: "feat_challenges" as TranslationKey, color: "text-ts-rose", bg: "bg-ts-rose/10" },
   { id: "voice_assistant", icon: Mic, labelKey: "feat_voice_guide" as TranslationKey, color: "text-primary", bg: "bg-primary/10" },
+  { id: "budget_tracker", icon: IndianRupee, labelKey: "feat_budget_tracker" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10" },
+  { id: "fake_call", icon: Phone, labelKey: "feat_fake_call" as TranslationKey, color: "text-destructive", bg: "bg-destructive/10" },
 ];
 
 export default function DesktopSidebar({

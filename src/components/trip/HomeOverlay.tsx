@@ -4,7 +4,7 @@ import {
   ChevronRight, Wand2, Star, Zap, TrendingUp, Mountain,
   Heart, Gem, Users, Palette, AlertTriangle, Leaf,
   Utensils, CloudSun, Medal, Bus, PartyPopper, Globe, Camera,
-  AlertOctagon, Clock, Compass, Brain, Wind, Luggage, MapPin, BarChart3, Sunrise, Target, Mic
+  AlertOctagon, Clock, Compass, Brain, Wind, Luggage, MapPin, BarChart3, Sunrise, Target, Mic, IndianRupee, Phone
 } from "lucide-react";
 import type { UserData, Place } from "@/lib/tripData";
 import { MOCK_DATA } from "@/lib/tripData";
@@ -45,6 +45,8 @@ interface HomeOverlayProps {
   onSunriseSunsetClick: () => void;
   onTravelChallengeClick: () => void;
   onVoiceAssistantClick: () => void;
+  onBudgetTrackerClick: () => void;
+  onFakeCallClick: () => void;
 }
 
 const categories = [
@@ -94,6 +96,8 @@ const quickFeatures = [
   { icon: Sunrise, labelKey: "feat_sunrise_set" as TranslationKey, color: "text-ts-saffron", bg: "bg-ts-saffron/10", key: "onSunriseSunsetClick" },
   { icon: Target, labelKey: "feat_challenges" as TranslationKey, color: "text-ts-rose", bg: "bg-ts-rose/10", key: "onTravelChallengeClick" },
   { icon: Mic, labelKey: "feat_voice_guide" as TranslationKey, color: "text-primary", bg: "bg-primary/10", key: "onVoiceAssistantClick" },
+  { icon: IndianRupee, labelKey: "feat_budget_tracker" as TranslationKey, color: "text-ts-green", bg: "bg-ts-green/10", key: "onBudgetTrackerClick" },
+  { icon: Phone, labelKey: "feat_fake_call" as TranslationKey, color: "text-destructive", bg: "bg-destructive/10", key: "onFakeCallClick" },
 ];
 
 export default function HomeOverlay({
@@ -106,7 +110,7 @@ export default function HomeOverlay({
   onPersonalityClick, onSkillExperienceClick, onAirQualityClick,
   onLostItemClick, onRestStopClick, onTravelRiskClick,
   onDigitalPassportClick, onSunriseSunsetClick, onTravelChallengeClick,
-  onVoiceAssistantClick,
+  onVoiceAssistantClick, onBudgetTrackerClick, onFakeCallClick,
 }: HomeOverlayProps) {
   const featureClickMap: Record<string, () => void> = {
     onFoodFinderClick, onWeatherClick, onMoodClick, onHiddenGemsClick,
@@ -116,7 +120,7 @@ export default function HomeOverlay({
     onPersonalityClick, onSkillExperienceClick, onAirQualityClick,
     onLostItemClick, onRestStopClick, onTravelRiskClick,
     onDigitalPassportClick, onSunriseSunsetClick, onTravelChallengeClick,
-    onVoiceAssistantClick,
+    onVoiceAssistantClick, onBudgetTrackerClick, onFakeCallClick,
   };
   const { t } = useTranslation();
 

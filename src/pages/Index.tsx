@@ -52,6 +52,8 @@ import DigitalPassportView from "@/components/trip/DigitalPassportView";
 import SunriseSunsetView from "@/components/trip/SunriseSunsetView";
 import TravelChallengeView from "@/components/trip/TravelChallengeView";
 import VoiceAssistantView from "@/components/trip/VoiceAssistantView";
+import BudgetTrackerView from "@/components/trip/BudgetTrackerView";
+import FakeCallView from "@/components/trip/FakeCallView";
 import {
   generateMockItinerary,
   generateMockPackingList,
@@ -261,6 +263,8 @@ export default function Index() {
                     onSunriseSunsetClick={() => setSubView("sunrise_sunset")}
                     onTravelChallengeClick={() => setSubView("travel_challenge")}
                     onVoiceAssistantClick={() => setSubView("voice_assistant")}
+                    onBudgetTrackerClick={() => setSubView("budget_tracker")}
+                    onFakeCallClick={() => setSubView("fake_call")}
                   />
                 )}
                 {subView === "search" && (
@@ -391,6 +395,12 @@ export default function Index() {
                 )}
                 {subView === "voice_assistant" && (
                   <VoiceAssistantView onBack={() => setSubView("home")} />
+                )}
+                {subView === "budget_tracker" && (
+                  <BudgetTrackerView onBack={() => setSubView("home")} />
+                )}
+                {subView === "fake_call" && (
+                  <FakeCallView onBack={() => setSubView("home")} />
                 )}
               </>
             )}
