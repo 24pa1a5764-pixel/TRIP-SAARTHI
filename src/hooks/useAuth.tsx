@@ -1,6 +1,14 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import type { User, Session } from "@supabase/supabase-js";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut as firebaseSignOut,
+  updateProfile as updateFirebaseProfile,
+  type User as FirebaseUser,
+} from "firebase/auth";
+import { auth, googleProvider } from "@/integrations/firebase/client";
 
 interface Profile {
   full_name: string | null;
@@ -12,13 +20,21 @@ interface Profile {
   avatar_url: string | null;
 }
 
+interface AppUser {
+  id: string;
+  email: string | null;
+  user_metadata?: {
+    full_name?: string | null;
+  };
+}
+
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: AppUser | null;
+  session: { provider: string } | null;
   profile: Profile | null;
   loading: boolean;
   needsOnboarding: boolean;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: () => Promise<{ error: string | null }>;
   signInWithEmail: (email: string, password: string) => Promise<{ error: string | null }>;
   signUpWithEmail: (email: string, password: string, name: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
@@ -28,91 +44,116 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const profileKey = (userId: string) => `trip_profile_${userId}`;
+
+const emptyProfile: Profile = {
+  full_name: null,
+  phone: null,
+  address: null,
+  city: null,
+  latitude: null,
+  longitude: null,
+  avatar_url: null,
+};
+
+const mapFirebaseUser = (fbUser: FirebaseUser): AppUser => ({
+  id: fbUser.uid,
+  email: fbUser.email,
+  user_metadata: {
+    full_name: fbUser.displayName,
+  },
+});
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [session, setSession] = useState<{ provider: string } | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
 
-  const fetchProfile = async (userId: string) => {
-    const { data } = await supabase
-      .from("profiles")
-      .select("full_name, phone, address, city, latitude, longitude, avatar_url")
-      .eq("user_id", userId)
-      .single();
-    
-    if (data) {
-      setProfile(data);
-      // If no name or address set, needs onboarding
-      setNeedsOnboarding(!data.full_name || (!data.address && !data.latitude));
-    } else {
-      setNeedsOnboarding(true);
+  const fetchProfile = async (userId: string, fallbackName?: string | null) => {
+    const raw = localStorage.getItem(profileKey(userId));
+    if (raw) {
+      const parsed = JSON.parse(raw) as Profile;
+      setProfile(parsed);
+      setNeedsOnboarding(!parsed.full_name || (!parsed.address && !parsed.latitude));
+      return;
     }
+
+    const initialProfile: Profile = {
+      ...emptyProfile,
+      full_name: fallbackName ?? null,
+    };
+    setProfile(initialProfile);
+    setNeedsOnboarding(true);
   };
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          // Use setTimeout to avoid Supabase deadlock
-          setTimeout(() => fetchProfile(session.user.id), 0);
-        } else {
-          setProfile(null);
-          setNeedsOnboarding(false);
-        }
-        setLoading(false);
-      }
-    );
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id);
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+      if (fbUser) {
+        const appUser = mapFirebaseUser(fbUser);
+        setUser(appUser);
+        setSession({ provider: fbUser.providerData?.[0]?.providerId ?? "firebase" });
+        await fetchProfile(appUser.id, appUser.user_metadata?.full_name ?? null);
+      } else {
+        setUser(null);
+        setSession(null);
+        setProfile(null);
+        setNeedsOnboarding(false);
       }
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   const signInWithGoogle = async () => {
-    const { lovable } = await import("@/integrations/lovable");
-    await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
+    try {
+      await signInWithPopup(auth, googleProvider);
+      return { error: null };
+    } catch (e) {
+      return {
+        error: e instanceof Error ? e.message : "Google sign-in failed.",
+      };
+    }
   };
 
   const signInWithEmail = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error?.message ?? null };
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      return { error: null };
+    } catch (e) {
+      return { error: e instanceof Error ? e.message : "Email sign-in failed." };
+    }
   };
 
   const signUpWithEmail = async (email: string, password: string, name: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: name },
-        emailRedirectTo: window.location.origin,
-      },
-    });
-    return { error: error?.message ?? null };
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      if (name.trim()) {
+        await updateFirebaseProfile(result.user, { displayName: name.trim() });
+      }
+      return { error: null };
+    } catch (e) {
+      return { error: e instanceof Error ? e.message : "Email sign-up failed." };
+    }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await firebaseSignOut(auth);
     setProfile(null);
     setNeedsOnboarding(false);
   };
 
   const updateProfile = async (data: Partial<Profile>) => {
     if (!user) return;
-    await supabase.from("profiles").update(data).eq("user_id", user.id);
-    await fetchProfile(user.id);
+    const updated: Profile = {
+      ...(profile ?? emptyProfile),
+      ...data,
+    };
+    localStorage.setItem(profileKey(user.id), JSON.stringify(updated));
+    setProfile(updated);
+    setNeedsOnboarding(!updated.full_name || (!updated.address && !updated.latitude));
   };
 
   const refreshProfile = async () => {
