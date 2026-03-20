@@ -15,7 +15,7 @@ const SWIPE_VELOCITY = 300;
 export default function SwipeableTabs({ children, tabIds, activeTab, onTabChange, enabled = true }: SwipeableTabsProps) {
   const controls = useAnimation();
 
-  const handleDragEnd = (_: any, info: PanInfo) => {
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
     if (!enabled) return;
 
     const currentIndex = tabIds.indexOf(activeTab);

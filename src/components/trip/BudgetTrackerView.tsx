@@ -68,6 +68,7 @@ export default function BudgetTrackerView({ onBack }: Props) {
           <ArrowLeft className="w-4 h-4 text-foreground" />
         </button>
         <div>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           <h1 className="text-lg font-display font-bold text-foreground">{t("feat_budget_tracker" as any)}</h1>
           <p className="text-[10px] text-muted-foreground">Track every rupee of your trip</p>
         </div>

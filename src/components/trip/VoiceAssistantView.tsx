@@ -20,7 +20,7 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [textInput, setTextInput] = useState("");
   const [transcript, setTranscript] = useState("");
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<unknown>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const synthRef = useRef(window.speechSynthesis);
 
@@ -28,11 +28,13 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
-  // Cleanup speech on unmount
   useEffect(() => {
+    const synth = synthRef.current;
+    
     return () => {
-      synthRef.current.cancel();
-      recognitionRef.current?.abort();
+      synth.cancel();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (recognitionRef.current as any)?.abort();
     };
   }, []);
 
@@ -65,15 +67,17 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
       const assistantMsg: Message = { role: "assistant", content: reply };
       setMessages(prev => [...prev, assistantMsg]);
       speak(reply);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Voice assistant error:", err);
       toast({ variant: "destructive", title: "Connection Error", description: "Could not reach the AI assistant." });
     } finally {
       setIsLoading(false);
     }
-  }, [messages, isLoading, speak]);
+  }, [isLoading, speak]);
 
   const startListening = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       toast({ variant: "destructive", title: "Not Supported", description: "Speech recognition is not available in this browser." });
@@ -86,6 +90,7 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
     recognition.interimResults = true;
     recognition.lang = "en-IN";
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onresult = (e: any) => {
       let interim = "";
       let final = "";
@@ -105,6 +110,7 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onerror = (e: any) => {
       console.error("Speech recognition error:", e.error);
       setIsListening(false);
@@ -122,7 +128,8 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
   }, [sendMessage]);
 
   const stopListening = useCallback(() => {
-    recognitionRef.current?.stop();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (recognitionRef.current as any)?.stop();
     setIsListening(false);
   }, []);
 

@@ -13,7 +13,7 @@ export default function SwipeToDelete({ children, onDelete, deleteLabel = "Delet
   const controls = useAnimation();
   const isDragging = useRef(false);
 
-  const handleDragEnd = async (_: any, info: PanInfo) => {
+  const handleDragEnd = async (_: unknown, info: PanInfo) => {
     isDragging.current = false;
     if (info.offset.x < DELETE_THRESHOLD) {
       await controls.start({ x: -300, opacity: 0, transition: { duration: 0.25 } });

@@ -15,7 +15,11 @@ export default function CommunityChat({ onBack }: CommunityChatProps) {
   const toggleLike = (id: number) => {
     setLikedIds(prev => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
     setMessages(prev => prev.map(m => m.id === id ? { ...m, likes: likedIds.has(id) ? m.likes - 1 : m.likes + 1 } : m));
