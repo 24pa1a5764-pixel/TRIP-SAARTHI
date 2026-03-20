@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import SplashScreen from "@/components/trip/SplashScreen";
 import AuthScreen from "@/components/trip/AuthScreen";
 import OnboardingScreen from "@/components/trip/OnboardingScreen";
@@ -88,24 +87,20 @@ export default function Index() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Load saved trips from DB
+  // Load saved trips from localStorage
   const loadTrips = useCallback(async () => {
     if (!user) return;
-    const { data } = await supabase
-      .from("saved_trips")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
-    if (data) {
-      setSavedTrips(
-        data.map((t) => ({
-          id: parseInt(t.id.replace(/-/g, "").slice(0, 8), 16), // numeric id for compat
-          date: new Date(t.created_at).toLocaleDateString(),
-          places: t.places,
-          data: t.trip_data as unknown as ItineraryData,
-          dbId: t.id,
-        }))
-      );
+    const key = `trip_saarthi_saved_trips_${user.id}`;
+    const raw = localStorage.getItem(key);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        setSavedTrips(parsed);
+      } catch (e) {
+        console.error("Failed to parse saved trips", e);
+      }
+    } else {
+      setSavedTrips([]);
     }
   }, [user]);
 
@@ -151,17 +146,19 @@ export default function Index() {
   const saveTrip = async () => {
     if (!itineraryResult || itineraryResult.isPacking || !user) return;
     
-    const { error } = await supabase.from("saved_trips").insert([{
-      user_id: user.id,
-      title: itineraryResult.title,
+    const newTrip: SavedTrip = {
+      id: Date.now(),
+      date: new Date().toLocaleDateString(),
       places: cart.map((c) => c.name),
-      trip_data: JSON.parse(JSON.stringify(itineraryResult)),
-    }]);
+      data: JSON.parse(JSON.stringify(itineraryResult)),
+    };
 
-    if (error) {
-      alert("Failed to save trip: " + error.message);
-      return;
-    }
+    const key = `trip_saarthi_saved_trips_${user.id}`;
+    const raw = localStorage.getItem(key);
+    const existing = raw ? JSON.parse(raw) : [];
+    const updated = [newTrip, ...existing];
+    
+    localStorage.setItem(key, JSON.stringify(updated));
     
     alert("Trip Saved! 🎉");
     await loadTrips();
@@ -170,13 +167,15 @@ export default function Index() {
   };
 
   const deleteSavedTrip = async (id: number) => {
-    const trip = savedTrips.find((t) => t.id === id);
-    if (!trip) return;
-    const dbId = (trip as any).dbId;
-    if (dbId) {
-      await supabase.from("saved_trips").delete().eq("id", dbId);
+    if (!user) return;
+    const key = `trip_saarthi_saved_trips_${user.id}`;
+    const raw = localStorage.getItem(key);
+    if (raw) {
+      const existing = JSON.parse(raw) as SavedTrip[];
+      const updated = existing.filter(t => t.id !== id);
+      localStorage.setItem(key, JSON.stringify(updated));
+      setSavedTrips(updated);
     }
-    await loadTrips();
   };
 
   const handleOnboarding = async (data: { full_name: string; phone: string; address: string; city: string; latitude?: number; longitude?: number }) => {

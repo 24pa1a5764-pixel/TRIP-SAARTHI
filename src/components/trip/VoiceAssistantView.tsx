@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Mic, MicOff, Volume2, VolumeX, Send, Loader2 } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 interface VoiceAssistantViewProps {
@@ -60,18 +59,9 @@ export default function VoiceAssistantView({ onBack }: VoiceAssistantViewProps) 
     setTranscript("");
 
     try {
-      const { data, error } = await supabase.functions.invoke("travel-voice-assistant", {
-        body: { message: text.trim(), history: messages.slice(-10) },
-      });
-
-      if (error) throw error;
-      if (data?.error) {
-        toast({ variant: "destructive", title: "Error", description: data.error });
-        setIsLoading(false);
-        return;
-      }
-
-      const reply = data?.reply || "Sorry, I couldn't process that.";
+      // Mocking the AI response to completely sever Supabase Dependency
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const reply = "I am currently running in offline mode, but I'd love to help you plan your trip! Ask me about specific local foods or safety tips!";
       const assistantMsg: Message = { role: "assistant", content: reply };
       setMessages(prev => [...prev, assistantMsg]);
       speak(reply);
